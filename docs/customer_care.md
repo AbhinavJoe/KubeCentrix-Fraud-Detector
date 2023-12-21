@@ -19,7 +19,7 @@ The script tries to load an existing JSON database file (number_database.json). 
 ```
 # Loading or Initializing Database
 The script tries to load an existing JSON database file (number_database.json). If the file is not found, it initializes an empty database.
-```
+```python
 try:
     with open('number_database.json', 'r') as file:
         number_database = json.load(file)
@@ -30,7 +30,7 @@ except FileNotFoundError:
 save_database
 Saves the current state of the database to the JSON file.
 
-```
+```python
 def save_database():
     with open('number_database.json', 'w') as file:
         json.dump(number_database, file)
@@ -38,7 +38,7 @@ check_number
 ```
 Checks if a given number is present in the database. If found, it returns the organization information; otherwise, it indicates the number is spam.
 
-```
+```python
 def check_number(number):
     if number in number_database:
         return f"Number is correct. Belongs to: {number_database[number]['org']}"
@@ -49,7 +49,7 @@ def check_number(number):
 
 The script includes a simple example usage within a loop to continuously prompt the user for a number to check.
 
-```
+```python
 while True:
     user_input = input("Enter a number to check: ")
     result = check_number(user_input)
