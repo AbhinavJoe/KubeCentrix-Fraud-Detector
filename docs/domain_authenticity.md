@@ -1,17 +1,17 @@
-Domain Registration Date Checker
+# Domain Registration Date Checker
 This Python script utilizes the whois library to retrieve and display the registration date of a given domain. Additionally, it calculates and prints the time period since the domain was registered.
 
-Import Statements
-python
+## Import Statements
+```python
 Copy code
 import whois
 from datetime import datetime
 Functions
 get_domain_registration_date
 This function takes a domain name as input, queries WHOIS information, and extracts the registration date. It then prints the registration date and calls the calculate_time_period function to determine the time period since registration.
+```
+```python
 
-python
-Copy code
 def get_domain_registration_date(domain_name):
     try:
         # Query WHOIS information
@@ -33,11 +33,12 @@ def get_domain_registration_date(domain_name):
 
     except whois.parser.PywhoisError as e:
         print(f"Error: {e}")
-calculate_time_period
+```
+### 'calculate_time_period'
 This function calculates the time period between the registration date and the current date. It then prints the duration the domain has been registered.
 
-python
-Copy code
+```python
+
 def calculate_time_period(registration_date):
     try:
         # Parse registration date and current date
@@ -53,12 +54,13 @@ def calculate_time_period(registration_date):
 
     except Exception as e:
         print(f"Error calculating time period: {e}")
-Example Usage
+```
+## Example Usage
 Replace the URL in the function call with the actual domain you want to check.
 
-python
-Copy code
+```python
 # Replace 'https://qubecentrix.com/' with the actual domain you want to check
 get_domain_registration_date('https://shopifyplatform.shop/m/index')
-License
+```
+## License
 This project is licensed under the MIT License
