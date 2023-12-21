@@ -35,7 +35,7 @@ def save_database():
     with open('number_database.json', 'w') as file:
         json.dump(number_database, file)
 ```
-'check_numbers'
+### 'check_numbers'
 Checks if a given number is present in the database. If found, it returns the organization information; otherwise, it indicates the number is spam.
 
 ```python
