@@ -60,7 +60,7 @@ def calculate_time_period(registration_date):
 Replace the URL in the function call with the actual domain you want to check.
 
 ```python
-# Replace 'https://qubecentrix.com/' with the actual domain you want to check
+# Replace 'https://shopifyplatform.shop/m/index' with the actual domain you want to check
 get_domain_registration_date('https://shopifyplatform.shop/m/index')
 ```
 ## License
