@@ -6,10 +6,11 @@ This Python script utilizes the whois library to retrieve and display the regist
 Copy code
 import whois
 from datetime import datetime
-Functions
-get_domain_registration_date
-This function takes a domain name as input, queries WHOIS information, and extracts the registration date. It then prints the registration date and calls the calculate_time_period function to determine the time period since registration.
 ```
+## Functions
+### 'get_domain_registration_date'
+This function takes a domain name as input, queries WHOIS information, and extracts the registration date. It then prints the registration date and calls the calculate_time_period function to determine the time period since registration.
+
 ```python
 
 def get_domain_registration_date(domain_name):
