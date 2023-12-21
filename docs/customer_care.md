@@ -17,7 +17,7 @@ json_file_path = os.path.join(
 Loading or Initializing Database
 The script tries to load an existing JSON database file (number_database.json). If the file is not found, it initializes an empty database.
 ```
-# Loading or Initializing Database
+## Loading or Initializing Database
 The script tries to load an existing JSON database file (number_database.json). If the file is not found, it initializes an empty database.
 ```python
 try:
@@ -26,7 +26,7 @@ try:
 except FileNotFoundError:
     number_database = {}
 ```
-# Functions
+## Functions
 save_database
 Saves the current state of the database to the JSON file.
 
@@ -45,7 +45,7 @@ def check_number(number):
     else:
         return "Spam"
 ```
-# Example Usage
+## Example Usage
 
 The script includes a simple example usage within a loop to continuously prompt the user for a number to check.
 
@@ -55,5 +55,5 @@ while True:
     result = check_number(user_input)
     print(result)
 ```
-# License
+## License
 This script is provided under the MIT License.
