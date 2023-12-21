@@ -17,6 +17,8 @@ json_file_path = os.path.join(
 Loading or Initializing Database
 The script tries to load an existing JSON database file (number_database.json). If the file is not found, it initializes an empty database.
 ```
+# Loading or Initializing Database
+The script tries to load an existing JSON database file (number_database.json). If the file is not found, it initializes an empty database.
 ```
 try:
     with open('number_database.json', 'r') as file:
@@ -47,8 +49,6 @@ def check_number(number):
 
 The script includes a simple example usage within a loop to continuously prompt the user for a number to check.
 
-
-# Example usage
 ```
 while True:
     user_input = input("Enter a number to check: ")
