@@ -27,15 +27,15 @@ except FileNotFoundError:
     number_database = {}
 ```
 ## Functions
-save_database
+### 'save_database'
 Saves the current state of the database to the JSON file.
 
 ```python
 def save_database():
     with open('number_database.json', 'w') as file:
         json.dump(number_database, file)
-check_number
 ```
+'check_numbers'
 Checks if a given number is present in the database. If found, it returns the organization information; otherwise, it indicates the number is spam.
 
 ```python
