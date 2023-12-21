@@ -1,0 +1,22 @@
+{
+    "name": "Fraud Detecter | KubeCentrix",
+    "version": "1.0.0",
+    "description": "Detects Fraudulent Websites",
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_icon": {
+            "16": "assets/16extension.png",
+            "24": "assets/48extension.png",
+            "32": "assets/128extension.png"
+        },
+        "default_title": "Fraud Detecter | KubeCentrix",
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
