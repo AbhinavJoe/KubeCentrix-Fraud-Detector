@@ -55,7 +55,7 @@ will be converted to the following JSON entry:
 
 ## Dependencies
 
-1. Python 3.x
+1. Python 3.12
 2. re (regular expression) module
 3. json module
 
