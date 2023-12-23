@@ -166,6 +166,8 @@ for line in bank_list_text.split('\n'):
         match = re.match(r"(.+?)\s+(www\..+)$", line)
         if match:
             name, url = match.groups()
+            # Add "https://" before "www." in the URL
+            url = f"https://{url}"
             banks.append({"name": name.strip(), "url": url.strip()})
 
 # Creates a JSON file and mention path
