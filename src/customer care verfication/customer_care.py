@@ -1,41 +1,53 @@
-import os
 import json
-
+import re
+import os
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
-    current_directory, "../../data/number_database.json")
-
-# Load existing database or create an empty one
-try:
-    with open('number_database.json', 'r') as file:
-        number_database = json.load(file)
-except FileNotFoundError:
-    # If the file is not found, initialize an empty database
-    number_database = {}
+    current_directory, "../../data/phonebook_data.json")
 
 
-def save_database():
-    # Save the current database to the JSON file
-    with open('number_database.json', 'w') as file:
-        json.dump(number_database, file)
+def is_valid_phone_number(phone_number):
+    # Use a regular expression to check if the input is a valid phone number
+    return bool(re.match(r'^\d{3}$|^\d{4}$|^\d{10}$', phone_number))
 
 
-def check_number(number):
-    # Check if the entered number is in the database
-    if number in number_database:
-        # If the number is found, return  org information
-        return f"Number is correct. Belongs to: {number_database[number]['org']}"
-    else:
-        # If the number is not found, return 'Spam'
-        return "Spam"
+def check_phone_number(phone_number, phonebook_data):
+    if not is_valid_phone_number(phone_number):
+        print("Invalid phone number. Please enter a valid phone number.")
+        return
+
+    # Check if the phone number is present in the JSON data
+    for entry in phonebook_data:
+        if entry['PhoneNumber'] == phone_number:
+            contact_name = entry['ContactName']
+            print(f"{phone_number} is legit\nThis number belongs to {
+                  contact_name}.")
+            return
+
+    # If the phone number is not found in the JSON data
+    print(f"{phone_number} is suspicious.\nThis number is not present in the PhoneBook.")
 
 
-# Example usage
-while True:
-    # Get user input for the number to check
-    user_input = input("Enter a number to check: ")
+def main():
+    # Load data from the JSON file
+    # to be changed by current directory
+    json_filename = 'phonebook_data.json'
+    with open(json_filename, 'r') as json_file:
+        phonebook_data = json.load(json_file)
 
-    # Printing  the result
-    result = check_number(user_input)
-    print(result)
+    while True:
+        # Take user input for the phone number
+        user_phone_number = input(
+            "Enter the phone number to check (or 'exit' to stop): ")
+
+        # Check if the user wants to exit
+        if user_phone_number.lower() == 'exit':
+            break
+
+        # Check the phone number
+        check_phone_number(user_phone_number, phonebook_data)
+
+
+if __name__ == "__main__":
+    main()
