@@ -3,7 +3,6 @@ This Python script utilizes the whois library to retrieve and display the regist
 
 ## Import Statements
 ```python
-Copy code
 import whois
 from datetime import datetime
 ```
