@@ -28,7 +28,7 @@ Air India – 1800 22 7722
 
 ## Running the Script
 
-``` bash
+```bash
 python banks_append.py
 ```
 
@@ -45,8 +45,7 @@ The script will generate a JSON file named phonebook_data.json containing the ex
   {
     "ContactName": "Air India",
     "PhoneNumber": "1800 22 7722"
-  },
-  ... (more entries)
+  }
 ]
 ```
 
