@@ -13,7 +13,7 @@ The script takes a predefined list text and parses it to extract customer care s
 ```plaintext
 Airtel – 18001030405
 Air India – 1800 22 7722
-# ... (more entries)
+... (more entries)
 ```
 
 2. Run the script to generate a JSON file.
@@ -46,7 +46,7 @@ The script will generate a JSON file named phonebook_data.json containing the ex
     "ContactName": "Air India",
     "PhoneNumber": "1800 22 7722"
   },
-  # ... (more entries)
+  ... (more entries)
 ]
 ```
 
