@@ -1,57 +1,78 @@
-# Bank Data Extraction and JSON Generation
+# Customer Care Number Extraction and JSON Generation
 
-This Python script extracts bank names and URLs from a given text format and creates a JSON file containing the bank data.
+This Python script extracts customer care service names and customer care numbers from a given text format and creates a JSON file containing the data.
 
 ## Script Overview
 
-The script takes a predefined bank list text and parses it to extract bank names and URLs. It then creates a JSON file with the extracted data.
+The script takes a predefined list text and parses it to extract customer care service names and customer care numbers. It then creates a JSON file with the extracted data.
 
 ## Usage
 
-1. Provide the bank list text in the specified format.
+1. Provide the list text in the specified format.
 
-   ```plaintext
-   Abhyudaya Co-op Bank    www.abhyudaya.com
-   Abu Dhabi Commercial Bank    www.adcb.com
-   Ahmedabad Mercantile Co-op Bank    www.amco-bank.com
-   # ... (add all other banks)
-   ```
+```plaintext
+Airtel – 18001030405
+Air India – 1800 22 7722
+# ... (more entries)
+```
 
 2. Run the script to generate a JSON file.
 
 ## Code Explanation
 
-- The script uses regular expressions to match and extract bank names and URLs from each line of the provided text.
+- The script uses regular expressions to match and extract customer care services names and customer care numbers from each line of the provided text.
 
-- The extracted data is stored in a list of dictionaries, where each dictionary represents a bank with its name and URL.
+- The extracted data is stored in a list of dictionaries, where each dictionary represents a customer care service with its name and number.
 
 - The script then creates a JSON file and writes the extracted data to it.
 
 ## Running the Script
 
-```
+``` bash
 python banks_append.py
 ```
 
 ## Output
 
-The script will generate a JSON file named bank_data.json containing the extracted bank data.
+The script will generate a JSON file named phonebook_data.json containing the extracted bank data. The output JSON file will have entries structured as follows:
+
+```json
+[
+  {
+    "ContactName": "Airtel",
+    "PhoneNumber": "18001030405"
+  },
+  {
+    "ContactName": "Air India",
+    "PhoneNumber": "1800 22 7722"
+  },
+  # ... (more entries)
+]
+```
 
 ## Example
 
 For example, the input line:
 
 ```plaintext
-Abhyudaya Co-op Bank    www.abhyudaya.com
-will be converted to the following JSON entry:
+Airtel – 18001030405
 ```
 
+will be converted to the following JSON entry:
+
 ```json
-{
-  "name": "Abhyudaya Co-op Bank",
-  "url": "www.abhyudaya.com"
-}
+[
+  {
+    "ContactName": "Airtel",
+    "PhoneNumber": "18001030405"
+  }
+]
 ```
+
+## File Structure
+
+1. `phonebook_generator.py`: Python script for generating phonebook data.
+2. `data/phonebook_data.json`: Output JSON file with contact names and phone numbers.
 
 ## Dependencies
 
