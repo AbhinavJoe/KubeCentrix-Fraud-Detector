@@ -9,7 +9,7 @@ json_file_path = os.path.join(
 
 def is_valid_phone_number(phone_number):
     # Use a regular expression to check if the input is a valid phone number
-    return bool(re.match(r'^\d{3}$|^\d{4}$|^\d{10}$', phone_number))
+    return bool(re.match(r'^\d{3}$|^\d{4}$||^\d{9}^\d{10}|^\d{11}}|^\d{12}$', phone_number))
 
 
 def check_phone_number(phone_number, phonebook_data):
