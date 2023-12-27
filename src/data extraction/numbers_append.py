@@ -247,15 +247,22 @@ Pedigree – 1800 11 2121
 Pizza Hut – 3988 3988
 Telecom Monitoring Cell – 1800 110 420
 World Vision India – 1800 444 550
+
+Police Helpline – 100
+Ambulance – 102
+Fire & Rescue Service – 101
+Cyber Crime Helpline – 1930
 """
 
 # Parse names and numbers from the text
 contacts = []
 for line in customer_care_list_text.split('\n'):
     if line.strip():  # Skip empty lines
-        match = re.match(r"(.+?)\s*–\s*(.+)$", line)
+        match = re.match(r"(.+?)\s*–\s*([\d\s]+)$", line)
         if match:
             ContactName, PhoneNumber = match.groups()
+            # Remove whitespaces from the phone number
+            PhoneNumber = ''.join(PhoneNumber.split())
             contacts.append({"ContactName": ContactName.strip(),
                             "PhoneNumber": PhoneNumber.strip()})
 
