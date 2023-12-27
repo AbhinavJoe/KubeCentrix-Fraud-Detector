@@ -1,36 +1,77 @@
-import os
+import mysql.connector
 import json
+from datetime import datetime
 
+def connect_to_database():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="J@itely54$",       # need to repalce 
+        database="Customer_Services"
+    )
 
-def collect_user_feedback():
-    # Prompt user for website URL
-    url = input("Enter the URL of the website: ")
+def insert_user_feedback():
+    db_connection = connect_to_database()
+    cursor = db_connection.cursor()
 
-    # Prompt user for feedback
-    feedback = input("Please provide feedback for the website: ")
+    # Take user feedback input
+    customer_name = input("Enter your name: ")
+    website_url = input("Enter the website URL: ")
+    feedback_text = input("Enter your feedback: ")
+    rating = float(input("Enter your rating (1-5): "))
 
-    # Construct the path for the JSON file
-    current_directory = os.path.dirname(os.path.realpath(__file__))
-    json_file_path = os.path.join(
-        current_directory, "../data/UserFeedback.json")
+    # Get the current timestamp
+    timestamp = datetime.now()
 
-    # Try to read existing feedback data from the JSON file
-    try:
-        with open(json_file_path, 'r') as json_file:
-            existing_data = json.load(json_file)
-    except FileNotFoundError:
-        # If the file doesn't exist, create an empty dictionary
-        existing_data = {}
+    # Insert the feedback into the UserFeedback table
+    insert_query = "INSERT INTO UserFeedback (CustomerName, Website_URL, FeedbackText, Rating, Timestamp) VALUES (%s, %s, %s, %s, %s)"
+    values = (customer_name, website_url, feedback_text, rating, timestamp)
 
-    # Update the existing data with new feedback
-    existing_data[url] = feedback
+    cursor.execute(insert_query, values)
+    db_connection.commit()
 
-    # Writing updated data to the JSON file
-    with open(json_file_path, 'w') as json_file:
-        json.dump(existing_data, json_file, indent=4)
+    # Fetch the auto-generated FeedbackID
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    feedback_id = cursor.fetchone()[0]
 
-    print("Feedback successfully recorded.")
+    # Close the cursor and connection
+    cursor.close()
+    db_connection.close()
 
+    print(f"Feedback successfully added to the database with FeedbackID: {feedback_id}.")
 
-# Call the function to collect user feedback
-collect_user_feedback()
+def fetch_and_store_to_json():
+    db_connection = connect_to_database()
+    cursor = db_connection.cursor()
+
+    # Fetch data from the UserFeedback table
+    select_query = "SELECT Website_URL, FeedbackText FROM UserFeedback"
+    cursor.execute(select_query)
+
+    # Fetch all the rows
+    feedback_data = cursor.fetchall()
+
+    # Create a list to store the data
+    data_list = []
+
+    # Convert the data to a list of dictionaries
+    for row in feedback_data:
+        data_list.append({
+            'Website_URL': row[0],
+            'FeedbackText': row[1]
+        })
+
+    # Close the cursor and connection
+    cursor.close()
+    db_connection.close()
+
+    # Save the data to a JSON file
+    json_filename = 'feedback_data.json'
+    with open(json_filename, 'w') as json_file:
+        json.dump(data_list, json_file, indent=2)
+
+    print(f"Data successfully stored in {json_filename}.")
+
+# Main script flow
+insert_user_feedback()
+fetch_and_store_to_json()
