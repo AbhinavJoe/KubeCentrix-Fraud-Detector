@@ -878,5 +878,21 @@
     {
         "ContactName": "World Vision India",
         "PhoneNumber": "1800 444 550"
+    },
+    {
+        "ContactName": "Police Helpline",
+        "PhoneNumber": "100"
+    },
+    {
+        "ContactName": "Ambulance",
+        "PhoneNumber": "102"
+    },
+    {
+        "ContactName": "Fire & Rescue Service",
+        "PhoneNumber": "101"
+    },
+    {
+        "ContactName": "Cyber Crime Helpline",
+        "PhoneNumber": "1930"
     }
 ]
