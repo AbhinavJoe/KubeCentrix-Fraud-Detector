@@ -42,10 +42,10 @@ def connect_to_database():
 
 2. Enter the required information when prompted:
 
-- Customer Name
-- Website URL
-- Feedback Text
-- Rating (1-5)
+   - Customer Name
+   - Website URL
+   - Feedback Text
+   - Rating (1-5)
 
 3. The script will insert the feedback into the database and print the auto-generated FeedbackID.
 
@@ -67,9 +67,10 @@ def connect_to_database():
 ```
 project_directory/
 │
-├── user_feedback.py
+├──src/
+│     └── user_feedback.py
 └── data/
-└── UserFeedback.json
+        └── UserFeedback.json
 ```
 
 ## License
