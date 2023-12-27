@@ -224,8 +224,6 @@ Numeric – 1800 44 3266
 Sukam – 1800 102 4423
 
 Indian Railway General Enquiry – 131
-Indian Railway Central Enquiry – 131
-Indian Railway Reservation – 131
 Indian Railway Railway Reservation Enquiry – 1345
 Indian Railway Centralised Railway Enquiry – 1330
 
