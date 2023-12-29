@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Chrome Extension</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4285f4;
+        }
+
+        p {
+            color: #333;
+        }
+
+        button {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to My Chrome Extension!</h1>
+    <p>This is a basic HTML page for your Chrome extension.</p>
+
+    <!-- Add your extension functionality here -->
+
+    <button id="clickMeButton">Click Me!</button>
+
+    <script>
+        // Add your JavaScript functionality here
+        document.getElementById('clickMeButton').addEventListener('click', function () {
+            alert('Button Clicked!');
+        });
+    </script>
+</body>
+
+</html>
