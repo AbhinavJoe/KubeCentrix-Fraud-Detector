@@ -10,7 +10,7 @@
         "Add Other Permissions as needed"
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "js/background.js"
     },
     "content_scripts": [
         {
@@ -18,7 +18,7 @@
                 "<all_urls>"
             ],
             "js": [
-                "content.js"
+                "js/content.js"
             ]
         }
     ],
@@ -29,7 +29,7 @@
             "128": "assets/128extension.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
-        "default_popup": "popup.html"
+        "default_popup": "html/popup.html"
     },
     "icons": {
         "16": "assets/48extension.png",
