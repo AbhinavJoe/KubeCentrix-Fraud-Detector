@@ -24,17 +24,17 @@
     ],
     "action": {
         "default_icon": {
-            "16": "assets/48extension.png",
-            "48": "assets/48extension.png",
-            "128": "assets/128extension.png"
+            "16": "assets/icon.png",
+            "48": "assets/icon.png",
+            "128": "assets/icon.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
         "default_popup": "html/popup.html"
     },
     "icons": {
-        "16": "assets/48extension.png",
-        "48": "assets/48extension.png",
-        "128": "assets/128extension.png"
+        "16": "assets/icon.png",
+        "48": "assets/icon.png",
+        "128": "assets/icon.png"
     },
     "manifest_version": 3
 }
