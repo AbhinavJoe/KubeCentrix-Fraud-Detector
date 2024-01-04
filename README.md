@@ -27,6 +27,10 @@ The goal of is to create and implement an AI/ML-based system capable of autonomo
 5. **User Feedback Integration:**
    - Incorporate mechanisms for user feedback to enhance the system's accuracy and adapt to evolving fraudulent tactics.
 
+## Methodology
+
+Put the methodology here.
+
 ## Repository Contents
 
 - **src/:** Contains the source code for the AI/ML system, organized into subdirectories for different components (website authentication, ad content analysis, etc.).
