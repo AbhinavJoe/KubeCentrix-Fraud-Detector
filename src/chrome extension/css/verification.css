@@ -1,0 +1,44 @@
+body,
+html {
+    background-color: #D8DBE2;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    font-size: 11pt;
+    margin: 0;
+    padding: 0;
+}
+
+/* a {
+
+} */
+
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+@media only screen and (max-width: 1024px) {
+
+    body,
+    html {
+        width: 400px;
+        height: 150px;
+    }
+
+    .main {
+        width: 250px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    div#navigation {
+        width: 250px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    .footer {
+        width: 250px;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
