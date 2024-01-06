@@ -1,18 +1,22 @@
 [
   {
-    "Website_URL": "https://www.youtube.com/",
-    "FeedbackText": "great responsive site "
+    "Website_URL": "http://www.google.com",
+    "FeedbackText": "good"
   },
   {
-    "Website_URL": "https://www.spotify.com/",
-    "FeedbackText": "good music app"
+    "Website_URL": "https://www.spotify.com",
+    "FeedbackText": "cheap website"
   },
   {
-    "Website_URL": "https://chat.openai.com/",
-    "FeedbackText": "good "
+    "Website_URL": "https://www.github.com",
+    "FeedbackText": "Very good platform to collaboratively work on projects."
   },
   {
-    "Website_URL": "https://www.facebook.com/",
-    "FeedbackText": "great ui"
+    "Website_URL": "https://instagram.com",
+    "FeedbackText": "Good social media platform. Very addictive though!"
+  },
+  {
+    "Website_URL": "https://facebook.com",
+    "FeedbackText": "Outdated social media platform. No one really uses it anymore."
   }
 ]
