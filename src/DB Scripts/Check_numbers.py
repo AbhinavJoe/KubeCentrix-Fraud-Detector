@@ -4,7 +4,8 @@ import os
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
-    current_directory, "../../data/phonebook_data.json")
+    current_directory, "../../data/phonebook_data.json"
+)
 
 
 def is_valid_phone_number(phone_number):
@@ -21,8 +22,7 @@ def check_phone_number(phone_number, phonebook_data):
     for entry in phonebook_data:
         if entry['PhoneNumber'] == phone_number:
             contact_name = entry['ContactName']
-            print(f"{phone_number} is legit\nThis number belongs to {
-                  contact_name}.")
+            print(f"{phone_number} is legit\nThis number belongs to {contact_name}.")
             return
 
     # If the phone number is not found in the JSON data
@@ -31,9 +31,7 @@ def check_phone_number(phone_number, phonebook_data):
 
 def main():
     # Load data from the JSON file
-    # to be changed by current directory
-    json_filename = 'phonebook_data.json'
-    with open(json_filename, 'r') as json_file:
+    with open(json_file_path, 'r') as json_file:
         phonebook_data = json.load(json_file)
 
     while True:
@@ -42,7 +40,7 @@ def main():
             "Enter the phone number to check (or 'exit' to stop): ")
 
         # Check if the user wants to exit
-        if user_phone_number.lower() == 'exit':
+        if user_phone_number.lower() == 'exit': 
             break
 
         # Check the phone number
