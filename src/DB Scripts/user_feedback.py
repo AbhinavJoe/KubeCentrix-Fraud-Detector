@@ -1,14 +1,22 @@
 import mysql.connector
 import json
 from datetime import datetime
+import os
+
+current_directory = os.path.dirname(os.path.realpath(__file__))
+json_file_path = os.path.join(
+    current_directory, "../../data/feedback_data.json"
+)
+
 
 def connect_to_database():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="J@itely54$",       # need to repalce 
+        password="Rock_Hopper1",
         database="Customer_Services"
     )
+
 
 def insert_user_feedback():
     db_connection = connect_to_database()
@@ -38,7 +46,9 @@ def insert_user_feedback():
     cursor.close()
     db_connection.close()
 
-    print(f"Feedback successfully added to the database with FeedbackID: {feedback_id}.")
+    print(
+        f"Feedback successfully added to the database with FeedbackID: {feedback_id}.")
+
 
 def fetch_and_store_to_json():
     db_connection = connect_to_database()
@@ -67,10 +77,11 @@ def fetch_and_store_to_json():
 
     # Save the data to a JSON file
     json_filename = 'feedback_data.json'
-    with open(json_filename, 'w') as json_file:
+    with open(json_file_path, 'w') as json_file:
         json.dump(data_list, json_file, indent=2)
 
     print(f"Data successfully stored in {json_filename}.")
+
 
 # Main script flow
 insert_user_feedback()
