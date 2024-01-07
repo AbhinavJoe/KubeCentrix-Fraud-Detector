@@ -11,10 +11,13 @@
 
 <body>
     <form action="/submitnumber" method="post">
-        <label for="number"></label>
-        <input type="tel" name="number" id="number" placeholder="Enter Number" maxlength="10" required>
+        <label for="phone_number"></label>
+        <input type="tel" name="phone_number" id="phone_number" placeholder="Enter Number" maxlength="11" required>
         <button type="submit">Submit</button>
     </form>
+    {% if number %}
+    <p>Submitted Number: {{ result }}</p>
+    {% endif %}
     <a href="popup.html">Return to Main Menu</a>
 </body>
 
