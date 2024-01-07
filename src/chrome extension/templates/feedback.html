@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/feedback.css">
+    <link rel="stylesheet" href="../static/feedback.css">
+    <!-- <script src="../static/feedback.js"></script> -->
     <title>Document</title>
 </head>
 
 <body>
-    <form action="">
+    <form action="/submitfeedback" method="post">
         <label for="feedbackurl">Enter Website URL</label>
-        <input type="url" id="feedbackurl" required>
-        <label for="feedback">Enter Your Feedback</label>
-        <textarea name="feedback" id="feedback" cols="10" rows="10"></textarea>
+        <input type="url" name="feedbackurl" id="feedbackurl" required>
+        <label for="feedbacktext">Enter Your Feedback</label>
+        <textarea name="feedbacktext" id="feedbacktext" cols="15" rows="3"></textarea>
         <input type="submit" id="submitfeedback">
     </form>
     <a href="popup.html">Return to Main Menu</a>
