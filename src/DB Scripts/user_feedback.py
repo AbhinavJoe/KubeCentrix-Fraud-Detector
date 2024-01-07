@@ -23,6 +23,7 @@ def insert_user_feedback():
     cursor = db_connection.cursor()
 
     # Take user feedback input
+    # Have to edit this out of the database and script as well. User name is not necessary.
     customer_name = input("Enter your name: ")
     website_url = input("Enter the website URL: ")
     feedback_text = input("Enter your feedback: ")
