@@ -8,7 +8,8 @@
         "webRequest",
         "webNavigation",
         "http://localhost:5000/",
-        "Add Other Permissions as needed"
+        "http://localhost:5000/verification.html",
+        "http://localhost:5000/feedback.html"
     ],
     "background": {
         "service_worker": "background.js"
