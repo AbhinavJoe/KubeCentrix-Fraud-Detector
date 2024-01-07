@@ -7,6 +7,7 @@
         "activeTab",
         "webRequest",
         "webNavigation",
+        "http://localhost:5000/",
         "Add Other Permissions as needed"
     ],
     "background": {
@@ -24,17 +25,17 @@
     ],
     "action": {
         "default_icon": {
-            "16": "assets/icon.png",
-            "48": "assets/icon.png",
-            "128": "assets/icon.png"
+            "16": "static/16icon.png",
+            "48": "static/48icon.png",
+            "128": "static/128icon.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
-        "default_popup": "html/popup.html"
+        "default_popup": "templates/popup.html"
     },
     "icons": {
-        "16": "assets/icon.png",
-        "48": "assets/icon.png",
-        "128": "assets/icon.png"
+        "16": "static/16icon.png",
+        "48": "static/48icon.png",
+        "128": "static/128icon.png"
     },
     "manifest_version": 3
 }
