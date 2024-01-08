@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/verification.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='verification.css') }}">
     <!-- <script src="../static/verification.js"></script> -->
     <title>Verification</title>
 </head>
@@ -22,22 +23,7 @@
 
     <div id="resultOutput"></div>
 
-    <a href="popup.html">Return to Main Menu</a>
-    <script>
-        function submitForm() {
-            const formData = new FormData(document.getElementById('myForm'));
-
-            fetch(`${serverUrl}/run-python-script`, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.text())
-                .then(result => {
-                    document.getElementById('resultOutput').innerText = result;
-                })
-                .catch(error => console.error(error));
-        }
-    </script>
+    <a href="/">Return to Main Menu</a>
 </body>
 
 </html>

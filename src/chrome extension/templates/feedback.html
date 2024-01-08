@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/feedback.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='feedback.css') }}">
     <!-- <script src="../static/feedback.js"></script> -->
     <title>Document</title>
 </head>
@@ -17,9 +18,9 @@
         <input type="number" name="rating" id="rating">
         <label for="feedback_text">Enter Your Feedback</label>
         <textarea name="feedback_text" id="feedback_text" cols="15" rows="3" required></textarea>
-        <button type="submit">
+        <button type="submit">Submit</button>
     </form>
-    <a href="popup.html">Return to Main Menu</a>
+    <a href="/">Return to Main Menu</a>
 </body>
 
 </html>
