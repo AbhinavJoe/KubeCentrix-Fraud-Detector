@@ -17,8 +17,18 @@ async def check_truecaller(phone_number):
 
 
 @app.route('/')
-def index():
+def popup():
     return render_template('popup.html')
+
+
+@app.route('/verification')
+def verification():
+    return render_template('verification.html')
+
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
 
 
 @app.route('/submitnumber', methods=['POST'])
