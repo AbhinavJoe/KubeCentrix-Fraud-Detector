@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from truecallerpy import search_phonenumber
+import asyncio
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ async def check_truecaller(phone_number):
         return f"{phone_number} is legit. This number belongs to {contact_name}."
     except Exception as e:
         print(f"Error: {e}")
-        return f"{phone_number} is suspicious. Unable to verify with Truecaller."
+        return f"{phone_number} is suspicious. Unable to verify!"
 
 
 @app.route('/')
@@ -34,8 +35,14 @@ def feedback():
 @app.route('/submitnumber', methods=['POST'])
 def submit_number():
     phone_number = request.form['phone_number']
-    result = check_truecaller(phone_number)
-    return render_template('templates/verification.html', result=result)
+
+    # Run the asynchronous coroutine using an event loop
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    result = loop.run_until_complete(check_truecaller(phone_number))
+    loop.close()
+
+    return render_template('verification.html', result=result)
 
 
 @app.route('/submitfeedback', methods=['POST'])
@@ -45,7 +52,7 @@ def submit_feedback():
     rating = request.form['rating']
     print(
         f'Feedback URL: {website_url}, Feedback Text: {feedback_text}, User Rating: {rating}')
-    return render_template('templates/feedback.html', feedbackurl=website_url, feedbacktext=feedback_text)
+    return render_template('feedback.html', website_url=website_url, feedback_text=feedback_text, rating=rating)
 
 
 if __name__ == '__main__':
