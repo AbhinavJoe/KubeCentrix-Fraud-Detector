@@ -24,7 +24,7 @@ label {
 input[type="tel"] {
     padding: 10px;
     width: 250px;
-    margin-bottom: 15px; /* Adjust the margin as needed */
+    margin-bottom: 15px;
     box-sizing: border-box;
 }
 
@@ -33,9 +33,17 @@ button {
     background-color: #3498db;
     color: white;
     border: none;
-    margin-top: 10px; /* Adjust the margin as needed */
-} 
+    margin-top: 10px;
+}
 
+a {
+    display: block;
+    margin-top: 20px;
+}
+
+a:hover {
+    color: purple;
+}
 
 
 @media only screen and (max-width: 1024px) {
