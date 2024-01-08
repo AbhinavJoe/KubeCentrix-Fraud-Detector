@@ -13,9 +13,11 @@
     <form action="/submitfeedback" method="post">
         <label for="website_url">Enter Website URL</label>
         <input type="url" name="website_url" id="website_url" required>
+        <label for="rating">Enter Your Rating</label>
+        <input type="number" name="rating" id="rating">
         <label for="feedback_text">Enter Your Feedback</label>
         <textarea name="feedback_text" id="feedback_text" cols="15" rows="3" required></textarea>
-        <input type="submit" id="submitfeedback">
+        <button type="submit">
     </form>
     <a href="popup.html">Return to Main Menu</a>
 </body>

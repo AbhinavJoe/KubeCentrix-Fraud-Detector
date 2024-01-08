@@ -13,14 +13,31 @@
     <form action="/submitnumber" method="post">
         <label for="phone_number"></label>
         <input type="tel" name="phone_number" id="phone_number" placeholder="Enter Number" maxlength="11" required>
-        <button type="submit" onclick="onClicked()">Submit</button>
+        <button type="submit" onclick="submitForm()">Submit</button>
     </form>
-    
+
     {% if result %}
-        <p>{{ result }}</p>
+    <p>{{ result }}</p>
     {% endif %}
-    
+
+    <div id="resultOutput"></div>
+
     <a href="popup.html">Return to Main Menu</a>
+    <script>
+        function submitForm() {
+            const formData = new FormData(document.getElementById('myForm'));
+
+            fetch(`${serverUrl}/run-python-script`, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.text())
+                .then(result => {
+                    document.getElementById('resultOutput').innerText = result;
+                })
+                .catch(error => console.error(error));
+        }
+    </script>
 </body>
 
 </html>
