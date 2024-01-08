@@ -7,21 +7,7 @@
         "activeTab",
         "webRequest",
         "webNavigation",
-        "http://localhost:5000/"
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "static/icon.png"
-            ],
-            "extension_ids": [
-                "*"
-            ],
-            "matches": [
-                "*://*/*"
-            ],
-            "use_dynamic_url": true
-        }
+        "http://localhost:5000/*"
     ],
     "background": {
         "service_worker": "background.js"
@@ -43,7 +29,7 @@
             "128": "static/128icon.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
-        "default_popup": "templates/popup.html"
+        "default_popup": "http://localhost:5000/"
     },
     "icons": {
         "16": "static/16icon.png",
