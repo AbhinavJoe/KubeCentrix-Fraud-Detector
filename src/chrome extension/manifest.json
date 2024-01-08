@@ -7,9 +7,11 @@
         "activeTab",
         "webRequest",
         "webNavigation",
-        "http://localhost:5000/",
-        "http://localhost:5000/verification.html",
-        "http://localhost:5000/feedback.html"
+        "http://localhost:5000/"
+    ],
+    "web_accessible_resources": [
+        "templates/verification.html",
+        "templates/feedback.html"
     ],
     "background": {
         "service_worker": "background.js"
