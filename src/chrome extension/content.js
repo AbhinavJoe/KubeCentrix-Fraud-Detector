@@ -1,4 +1,4 @@
-const serverUrl = 'http://127.0.0.1:5000';
+// const serverUrl = 'http://127.0.0.1:5000';
 
 // // Example: Trigger the Python script when the extension button is clicked
 // chrome.browserAction.onClicked.addListener(() => {
@@ -16,15 +16,18 @@ const serverUrl = 'http://127.0.0.1:5000';
 //     .catch(error => console.error(error));
 // });
 
-function submitForm() {
-    const formData = new FormData(document.getElementById('myForm'));
+// function submitForm() {
+//     const formData = new FormData(document.getElementById('myForm'));
 
-    fetch(`${serverUrl}/run-python-script`, {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.error(error));
-}
+//     fetch(`${serverUrl}/run-python-script`, {
+//         method: 'POST',
+//         body: formData,
+//     })
+//         .then(response => response.text())
+//         .then(result => console.log(result))
+//         .catch(error => console.error(error));
+// }
 
+fetch('http://localhost:5000/*').then(r => r.text()).then(result => {
+    // Result now contains the response text, do what you want...
+})
