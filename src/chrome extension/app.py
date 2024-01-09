@@ -6,23 +6,12 @@ from datetime import datetime
 import os
 import asyncio
 
+app = Flask(__name__)
+
 current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
     current_directory, "../../data/feedback_data.json"
 )
-
-
-app = Flask(__name__)
-
-
-def connect_to_database():
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="Rock_Hopper1",
-        database="Customer_Services"
-    )
-
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -35,6 +24,40 @@ async def check_truecaller(phone_number):
     except Exception as e:
         print(f"Error: {e}")
         return f"{phone_number} is suspicious. Unable to verify!"
+
+
+def connect_to_database():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Rock_Hopper1",
+        database="Customer_Services"
+    )
+
+
+def insert_user_feedback(customer_name, website_url, feedback_text, rating):
+    db_connection = connect_to_database()
+    cursor = db_connection.cursor()
+
+    # Get the current timestamp
+    timestamp = datetime.now()
+
+    # Insert the feedback into the UserFeedback table
+    insert_query = "INSERT INTO UserFeedback (CustomerName, Website_URL, FeedbackText, Rating, Timestamp) VALUES (%s, %s, %s, %s, %s)"
+    values = (customer_name, website_url, feedback_text, rating, timestamp)
+
+    cursor.execute(insert_query, values)
+    db_connection.commit()
+
+    # Fetch the auto-generated FeedbackID
+    cursor.execute("SELECT LAST_INSERT_ID()")
+    feedback_id = cursor.fetchone()[0]
+
+    # Close the cursor and connection
+    cursor.close()
+    db_connection.close()
+
+    return feedback_id
 
 
 @app.route('/')
@@ -65,58 +88,61 @@ def submit_number():
     return render_template('verification.html', result=result)
 
 
-# @app.route('/submitfeedback', methods=['POST'])
-# def submit_feedback():
-#     website_url = request.form['website_url']
-#     feedback_text = request.form['feedback_text']
-#     rating = request.form['rating']
-#     print(
-#         f'Feedback URL: {website_url}, Feedback Text: {feedback_text}, User Rating: {rating}')
-#     return render_template('feedback.html', website_url=website_url, feedback_text=feedback_text, rating=rating)
-
 @app.route('/submitfeedback', methods=['POST'])
 def submit_feedback():
     try:
-        db_connection = connect_to_database()
-        cursor = db_connection.cursor()
-
         # Retrieve data from the request
-        data = request.json
+        data = request.form
         customer_name = data.get("customer_name")
         website_url = data.get("website_url")
         feedback_text = data.get("feedback_text")
         rating = data.get("rating")
 
-        # Get the current timestamp
-        timestamp = datetime.now()
+        # Insert feedback into the database
+        feedback_id = insert_user_feedback(
+            customer_name, website_url, feedback_text, rating)
 
-        # Insert the feedback into the UserFeedback table
-        insert_query = "INSERT INTO UserFeedback (CustomerName, Website_URL, FeedbackText, Rating, Timestamp) VALUES (%s, %s, %s, %s, %s)"
-        values = (customer_name, website_url, feedback_text, rating, timestamp)
+        # Fetch and store data to JSON file
+        fetch_and_store_to_json()
 
-        cursor.execute(insert_query, values)
-        db_connection.commit()
-
-        # Fetch the auto-generated FeedbackID
-        cursor.execute("SELECT LAST_INSERT_ID()")
-        feedback_id = cursor.fetchone()[0]
-
-        # Close the cursor and connection
-        cursor.close()
-        db_connection.close()
-
-        response = {
-            "success": True,
-            "message": f"Feedback successfully added to the database with FeedbackID: {feedback_id}."
-        }
+        response = "Your feedback has been recorded. Thank You."
 
     except Exception as e:
-        response = {
-            "success": False,
-            "message": f"An error occurred: {str(e)}"
-        }
+        response = f"An error occurred: {str(e)}"
 
-    return jsonify(response)
+    return render_template('feedback.html', response=response)
+
+
+def fetch_and_store_to_json():
+    db_connection = connect_to_database()
+    cursor = db_connection.cursor()
+
+    # Fetch data from the UserFeedback table
+    select_query = "SELECT Website_URL, FeedbackText FROM UserFeedback"
+    cursor.execute(select_query)
+
+    # Fetch all the rows
+    feedback_data = cursor.fetchall()
+
+    # Create a list to store the data
+    data_list = []
+
+    # Convert the data to a list of dictionaries
+    for row in feedback_data:
+        data_list.append({
+            'Website_URL': row[0],
+            'FeedbackText': row[1]
+        })
+
+    # Close the cursor and connection
+    cursor.close()
+    db_connection.close()
+
+    # Save the data to a JSON file
+    with open(json_file_path, 'w') as json_file:
+        json.dump(data_list, json_file, indent=2)
+
+    print(f"Data successfully stored in feedback_data.json.")
 
 
 if __name__ == '__main__':
