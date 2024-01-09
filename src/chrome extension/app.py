@@ -1,8 +1,28 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, render_template, jsonify
 from truecallerpy import search_phonenumber
+import mysql.connector
+import json
+from datetime import datetime
+import os
 import asyncio
 
+current_directory = os.path.dirname(os.path.realpath(__file__))
+json_file_path = os.path.join(
+    current_directory, "../../data/feedback_data.json"
+)
+
+
 app = Flask(__name__)
+
+
+def connect_to_database():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="Rock_Hopper1",
+        database="Customer_Services"
+    )
+
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -45,14 +65,58 @@ def submit_number():
     return render_template('verification.html', result=result)
 
 
+# @app.route('/submitfeedback', methods=['POST'])
+# def submit_feedback():
+#     website_url = request.form['website_url']
+#     feedback_text = request.form['feedback_text']
+#     rating = request.form['rating']
+#     print(
+#         f'Feedback URL: {website_url}, Feedback Text: {feedback_text}, User Rating: {rating}')
+#     return render_template('feedback.html', website_url=website_url, feedback_text=feedback_text, rating=rating)
+
 @app.route('/submitfeedback', methods=['POST'])
 def submit_feedback():
-    website_url = request.form['website_url']
-    feedback_text = request.form['feedback_text']
-    rating = request.form['rating']
-    print(
-        f'Feedback URL: {website_url}, Feedback Text: {feedback_text}, User Rating: {rating}')
-    return render_template('feedback.html', website_url=website_url, feedback_text=feedback_text, rating=rating)
+    try:
+        db_connection = connect_to_database()
+        cursor = db_connection.cursor()
+
+        # Retrieve data from the request
+        data = request.json
+        customer_name = data.get("customer_name")
+        website_url = data.get("website_url")
+        feedback_text = data.get("feedback_text")
+        rating = data.get("rating")
+
+        # Get the current timestamp
+        timestamp = datetime.now()
+
+        # Insert the feedback into the UserFeedback table
+        insert_query = "INSERT INTO UserFeedback (CustomerName, Website_URL, FeedbackText, Rating, Timestamp) VALUES (%s, %s, %s, %s, %s)"
+        values = (customer_name, website_url, feedback_text, rating, timestamp)
+
+        cursor.execute(insert_query, values)
+        db_connection.commit()
+
+        # Fetch the auto-generated FeedbackID
+        cursor.execute("SELECT LAST_INSERT_ID()")
+        feedback_id = cursor.fetchone()[0]
+
+        # Close the cursor and connection
+        cursor.close()
+        db_connection.close()
+
+        response = {
+            "success": True,
+            "message": f"Feedback successfully added to the database with FeedbackID: {feedback_id}."
+        }
+
+    except Exception as e:
+        response = {
+            "success": False,
+            "message": f"An error occurred: {str(e)}"
+        }
+
+    return jsonify(response)
 
 
 if __name__ == '__main__':
