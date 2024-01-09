@@ -36,5 +36,9 @@
         "default_title": "Fraud Detecter | KubeCentrix",
         "default_popup": "http://localhost:5000"
     },
+    "icons": {
+        "48": "static/48icon.png",
+        "96": "static/96icon.png"
+    },
     "manifest_version": 3
 }
