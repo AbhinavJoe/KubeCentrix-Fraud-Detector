@@ -1,5 +1,6 @@
 {
     "name": "Fraud Detecter | KubeCentrix",
+    "author": "KubeCentrix",
     "version": "1.0",
     "description": "Detect fraudulent websites and validate customer care numbers.",
     "permissions": [
