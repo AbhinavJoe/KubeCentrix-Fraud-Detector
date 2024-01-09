@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template
+from flask_cors import CORS
 from truecallerpy import search_phonenumber
 import mysql.connector
 import json
@@ -7,6 +8,7 @@ import os
 import asyncio
 
 app = Flask(__name__)
+CORS(app)
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
