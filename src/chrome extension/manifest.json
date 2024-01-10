@@ -7,13 +7,10 @@
         "storage",
         "activeTab",
         "webRequest",
-        "webNavigation",
-        "http://localhost:5000/",
-        "http://localhost:5000/verification",
-        "http://localhost:5000/feedback"
+        "webNavigation"
     ],
     "host_permissions": [
-        "http://localhost:5000"
+        "http://localhost:5000/*"
     ],
     "background": {
         "service_worker": "background.js"
@@ -35,7 +32,7 @@
             "64": "static/64icon.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
-        "default_popup": "http://localhost:5000"
+        "default_popup": "templates/extension-popup.html"
     },
     "icons": {
         "48": "static/48icon.png",

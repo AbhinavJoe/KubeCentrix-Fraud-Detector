@@ -110,7 +110,7 @@ def submit_feedback():
         response = "Your feedback has been recorded. Thank You."
 
     except Exception as e:
-        response = f"An error occurred: {str(e)}"
+        response = f"An error occurred: {str(e)}. Please try again later."
 
     return render_template('feedback.html', response=response)
 
