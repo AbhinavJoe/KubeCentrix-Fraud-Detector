@@ -38,5 +38,13 @@
   {
     "Website_URL": "https://www.google.com",
     "FeedbackText": "Good."
+  },
+  {
+    "Website_URL": "https://www.instagram.com",
+    "FeedbackText": "Good social media app."
+  },
+  {
+    "Website_URL": "https://www.instagram.com",
+    "FeedbackText": "Not that good. Decent social media platform."
   }
 ]
