@@ -5,19 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/popup.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='popup.css') }}">
-    <!-- <script src="../static/popup.js"></script> -->
-    <title>Document</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='popup.css') }}"> -->
+    <title>Popup</title>
 </head>
 
 <body>
     <div class="container">
         <img src="../static/icon.png" alt="Extension Image" class="extension-image">
-        <div class="content">
+        <div class="main-content">
             <h2>The extension is currently running in the background</h2>
             <div class="links">
-                <a href="/verification" class="link">Verify Customer Care Number</a>
-                <a href="/feedback" class="link">User Feedback</a>
+                <a href="/verification">Verify Number</a>
+                <a href="/feedback">User Feedback</a>
             </div>
         </div>
     </div>

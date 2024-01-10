@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/verification.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='verification.css') }}">
-    <!-- <script src="../static/verification.js"></script> -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='verification.css') }}"> -->
     <title>Verification</title>
 </head>
 
@@ -14,13 +13,12 @@
     <form action="/submitnumber" method="post">
         <label for="phone_number"></label>
         <input type="tel" name="phone_number" id="phone_number" placeholder="Enter Number" maxlength="11" required>
-        <button type="submit">Submit</button> <!--onclick="submitForm()"-->
+        <button type="submit">Submit</button>
     </form>
 
     {% if result %}
     <p>{{ result }}</p>
     {% endif %}
-
     <a href="/">Return to Main Menu</a>
 </body>
 
