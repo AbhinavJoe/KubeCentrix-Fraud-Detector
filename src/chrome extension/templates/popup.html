@@ -5,21 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/popup.css">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='popup.css') }}"> -->
-    <title>Popup</title>
+    <title>Fraud Detector | KubeCentrix</title>
 </head>
 
 <body>
-    <div class="container">
-        <img src="../static/icon.png" alt="Extension Image" class="extension-image">
-        <div class="main-content">
-            <h2>The extension is currently running in the background</h2>
-            <div class="links">
-                <a href="/verification">Verify Number</a>
-                <a href="/feedback">User Feedback</a>
-            </div>
-        </div>
-    </div>
+    <iframe src="http://localhost:5000/" width="400" height="150"></iframe>
 </body>
 
 </html>
