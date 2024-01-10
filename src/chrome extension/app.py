@@ -18,11 +18,38 @@ json_file_path = os.path.join(
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
 
+# async def check_truecaller(phone_number):
+#     try:
+#         result = await search_phonenumber({"phone_number": phone_number}, "IN", id)
+#         contact_name = result['data']['data'][0]['name']
+#         return f"{phone_number} is legit. This number belongs to {contact_name}."
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return f"{phone_number} is suspicious. Unable to verify!"
+
 async def check_truecaller(phone_number):
     try:
         result = await search_phonenumber({"phone_number": phone_number}, "IN", id)
-        contact_name = result['data']['data'][0]['name']
-        return f"{phone_number} is legit. This number belongs to {contact_name}."
+        if result['status_code'] == 200 and result['data']['data']:
+            phone_data = result['data']['data'][0]
+
+            if 'spamInfo' in phone_data:
+                spam_info = phone_data['spamInfo']
+                spam_score = spam_info.get('spamScore', 0)
+                spam_type = spam_info.get('spamType', '')
+
+                if spam_score > 0 and spam_type:
+                    return f"{phone_number} is likely spam. Type: {spam_type}, Score: {spam_score}."
+
+            contact_name = phone_data.get('name', 'Unknown')
+
+            if contact_name == 'Unknown':
+                return f"{phone_number} does not have enough information available."
+
+            return f"{phone_number} is legit. This number belongs to {contact_name}."
+        else:
+            return f"{phone_number} does not have enough information available."
+
     except Exception as e:
         print(f"Error: {e}")
         return f"{phone_number} is suspicious. Unable to verify!"
@@ -80,7 +107,6 @@ def feedback():
 @app.route('/submitnumber', methods=['POST'])
 def submit_number():
     phone_number = request.form['phone_number']
-
     # Run the asynchronous coroutine using an event loop
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
