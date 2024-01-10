@@ -16,7 +16,7 @@ html {
     height: 150px;
 }
 
-.content {
+.main-content {
     padding: 10px;
     box-sizing: border-box;
     display: flex;
