@@ -64,7 +64,7 @@ def insert_user_feedback(customer_name, website_url, feedback_text, rating):
 
 @app.route('/')
 def popup():
-    return render_template('popup.html')
+    return render_template('index.html')
 
 
 @app.route('/verification')

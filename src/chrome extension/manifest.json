@@ -32,7 +32,7 @@
             "64": "static/64icon.png"
         },
         "default_title": "Fraud Detecter | KubeCentrix",
-        "default_popup": "templates/extension-popup.html"
+        "default_popup": "templates/popup.html"
     },
     "icons": {
         "48": "static/48icon.png",
