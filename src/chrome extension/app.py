@@ -18,15 +18,6 @@ json_file_path = os.path.join(
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
 
-# async def check_truecaller(phone_number):
-#     try:
-#         result = await search_phonenumber({"phone_number": phone_number}, "IN", id)
-#         contact_name = result['data']['data'][0]['name']
-#         return f"{phone_number} is legit. This number belongs to {contact_name}."
-#     except Exception as e:
-#         print(f"Error: {e}")
-#         return f"{phone_number} is suspicious. Unable to verify!"
-
 async def check_truecaller(phone_number):
     try:
         result = await search_phonenumber({"phone_number": phone_number}, "IN", id)
