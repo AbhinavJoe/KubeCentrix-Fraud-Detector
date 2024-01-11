@@ -50,5 +50,9 @@
   {
     "Website_URL": "https://mail.google.com",
     "FeedbackText": "Very good website. I can send mails, schedule mails and do a lot of work related stuff with ease."
+  },
+  {
+    "Website_URL": "https://www.google.com",
+    "FeedbackText": "Good for finding information fast."
   }
 ]
