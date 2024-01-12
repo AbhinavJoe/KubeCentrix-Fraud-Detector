@@ -1,18 +1,53 @@
-// function fetchDataFromServer(endpoint) {
-//     return fetch(`http://localhost:5000/${endpoint}`)
-//         .then(response => response.json()) // Assuming the server response is JSON
-//         .catch(error => console.error('Error fetching data:', error));
-// }
+chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    if (changeInfo.status === 'complete' && tab.active) {
+        fetch('http://localhost:5000/scan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: tab.url, word_list: ["suspicious", "phishing"] })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data.isFraudulent) {
+                    chrome.tabs.sendMessage(tabId, { type: "FRAUD_WARNING" });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
 
-// // Listening for messages from popup or content scripts
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//     if (request.action === "fetchData") {
-//         // Fetch data based on the request and send response back
-//         fetchDataFromServer(request.endpoint).then(data => {
-//             sendResponse({ status: "success", data: data });
-//         }).catch(error => {
-//             sendResponse({ status: "error", error: error });
-//         });
-//         return true; // Indicates that sendResponse will be called asynchronously
+// Content Script Messaging Listener
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === "FRAUD_WARNING") {
+        chrome.notifications.create({
+            type: "basic",
+            iconUrl: "warning_icon.png",
+            title: "Security Alert",
+            message: "Warning: This website may be fraudulent."
+        });
+    }
+});
+
+
+// chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+//     if (changeInfo.status === 'complete' && tab.active) {
+//         // Existing code to check for fraudulent website...
+//         fetch('http://localhost:5000/scan', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify({ url: tab.url, word_list: ["suspicious", "phishing"] })
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             if (data.isFraudulent) {
+//                 // Redirect to the custom HTML page
+//                 chrome.tabs.update(tabId, { url: chrome.runtime.getURL("fraud-warning.html") });
+//             }
+//         })
+//         .catch(error => console.error('Error:', error));
 //     }
 // });
