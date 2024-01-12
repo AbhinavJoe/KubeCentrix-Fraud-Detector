@@ -174,6 +174,7 @@ def website_scanning():
     data = request.json
     url = data.get("url")
     word_list = data.get("word_list")
+    threshold = 7
 
     if not url or not word_list:
         return jsonify({"error": "Missing url or word_list"}), 400
@@ -187,7 +188,11 @@ def website_scanning():
             matching_words = [word for word in re.findall(
                 r'\b\w+\b', all_text) if word.lower() in map(str.lower, word_list)]
 
+            # Determine if the site is fraudulent based on the number of matching words
+            is_fraudulent = len(matching_words) >= threshold
+
             return jsonify({
+                "isFraudulent": is_fraudulent,
                 "matching_words": matching_words,
                 "count": len(matching_words)
             })

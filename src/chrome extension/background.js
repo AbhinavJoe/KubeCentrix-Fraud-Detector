@@ -5,7 +5,44 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ url: tab.url, word_list: ["suspicious", "phishing"] })
+            body: JSON.stringify({
+                url: tab.url, word_list: [
+                    "suspicious",
+                    "phishing",
+                    "free",
+                    "limited time",
+                    "money",
+                    "earn",
+                    "win",
+                    "invest",
+                    "guaranteed",
+                    "miracle",
+                    "love",
+                    "happy",
+                    "success",
+                    "dream",
+                    "click",
+                    "buy",
+                    "claim",
+                    "order",
+                    "banking",
+                    "credit",
+                    "loan",
+                    "investment",
+                    "cure",
+                    "miracle",
+                    "free",
+                    "download",
+                    "update",
+                    "security",
+                    "crack",
+                    "discount",
+                    "sale",
+                    "deal",
+                    "coupon",
+                    "limited"
+                ]
+            })
         })
             .then(response => response.json())
             .then(data => {
@@ -19,7 +56,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 // Content Script Messaging Listener
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => { // Have to ask GPT 4 why this sender, sendResponse is not getting used in the script
     if (message.type === "FRAUD_WARNING") {
         chrome.notifications.create({
             type: "basic",
