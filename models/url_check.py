@@ -5,6 +5,7 @@ import os
 current_directory = os.path.dirname(os.path.realpath(__file__))
 model_path = os.path.join(current_directory, "model.pkl")
 vectorizer_path = os.path.join(current_directory, "vectorizer.pkl")
+
 # Load the trained MultiOutputClassifier model
 with open(model_path, "rb") as file:
     rf_model = pickle.load(file)
