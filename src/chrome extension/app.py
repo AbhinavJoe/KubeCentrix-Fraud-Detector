@@ -217,7 +217,6 @@ def check_website():
     if website_age is not None and website_age < 30:  # less than 30 days
         trust_score -= 3
 
-    # Determine if the website is potentially fraudulent
     is_fraudulent = trust_score < 5
 
     return jsonify({
