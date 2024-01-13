@@ -207,20 +207,23 @@ def website_scanning():
 def check_ssl():
     data = request.json
     url = data.get("url")
-
-    if not url:
-        return jsonify({"error": "Missing url"}), 400
-
     try:
-        response = requests.get(url, timeout=5)
-        if response.status_code == 200:
-            if response.url.startswith("https://"):
-                return jsonify({"url": url, "ssl": True, "message": "The website uses SSL."})
+        if not url:
+            return jsonify({"error": "Missing url"}), 400
+
+        try:
+            response = requests.get(url, timeout=5)
+            if response.status_code == 200:
+                if response.url.startswith("https://"):
+                    return jsonify({"url": url, "ssl": True, "message": "The website uses SSL."})
+                else:
+                    return jsonify({"url": url, "ssl": False, "message": "The website does not use SSL."})
             else:
-                return jsonify({"url": url, "ssl": False, "message": "The website does not use SSL."})
-        else:
-            return jsonify({"url": url, "error": f"Failed to retrieve the website. Status code: {response.status_code}"}), response.status_code
+                return jsonify({"url": url, "error": f"Failed to retrieve the website. Status code: {response.status_code}"}), response.status_code
+        except Exception as e:
+            return jsonify({"url": url, "error": f"An error occurred: {e}"}), 500
     except Exception as e:
+        app.logger.error(f"Error in check_ssl: {e}")
         return jsonify({"url": url, "error": f"An error occurred: {e}"}), 500
 
 
@@ -235,20 +238,26 @@ def get_domain_registration_date():
 
     try:
         domain_info = whois.whois(domain_name)
-        registration_dates = domain_info.creation_date
+        registration_date = domain_info.creation_date
 
-        if isinstance(registration_dates, list):
-            registration_date = registration_dates[0]
+        if registration_date:
+            if isinstance(registration_date, list):
+                registration_date = registration_date[0]
+
+            formatted_date = registration_date.strftime('%Y-%m-%d %H:%M:%S')
+            time_period = calculate_time_period(registration_date)
+            return jsonify({
+                "domain_name": domain_name,
+                "registration_date": formatted_date,
+                "days_registered": time_period
+            })
         else:
-            registration_date = registration_dates
+            return jsonify({
+                "domain_name": domain_name,
+                "error": "Registration date not available"
+            }), 404
 
-        time_period = calculate_time_period(registration_date)
-        return jsonify({
-            "domain_name": domain_name,
-            "registration_date": registration_date.strftime('%Y-%m-%d %H:%M:%S'),
-            "days_registered": time_period
-        })
-    except whois.parser.PywhoisError as e:
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
@@ -260,6 +269,11 @@ def calculate_time_period(registration_date):
         return (current_date - registration_date).days
     except Exception as e:
         return str(e)
+
+
+@app.route('/blocked', methods=['POST'])
+def blocked():
+    return render_template('blocked.html')
 
 
 if __name__ == '__main__':
