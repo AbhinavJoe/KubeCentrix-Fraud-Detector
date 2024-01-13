@@ -7,17 +7,17 @@ from datetime import datetime
 import os
 import asyncio
 import requests
-from bs4 import BeautifulSoup
-import re
 import whois
+
 
 app = Flask(__name__)
 CORS(app)
 
 current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
-    current_directory, "../../data/feedback_data.json"
-)
+    current_directory, "../../data/feedback_data.json")
+
+words_file_path = os.path.join(current_directory, "word_list.json")
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -168,110 +168,65 @@ def fetch_and_store_to_json():
     print(f"Data successfully stored in feedback_data.json.")
 
 
-# Phishing Detection Endpoint
-@app.route('/scan', methods=['POST'])
-def website_scanning():
-    data = request.json
-    url = data.get("url")
-    word_list = data.get("word_list")
-    threshold = 7
+with open(words_file_path) as f:
+    suspicious_words = json.load(f)
 
-    if not url or not word_list:
-        return jsonify({"error": "Missing url or word_list"}), 400
 
+def check_ssl(url):
     try:
         response = requests.get(url)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
-            all_text = ' '.join([element.get_text(separator=' ') for element in soup.find_all(
-                ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span', 'div'])])
-            matching_words = [word for word in re.findall(
-                r'\b\w+\b', all_text) if word.lower() in map(str.lower, word_list)]
-
-            # Determine if the site is fraudulent based on the number of matching words
-            is_fraudulent = len(matching_words) >= threshold
-
-            return jsonify({
-                "isFraudulent": is_fraudulent,
-                "matching_words": matching_words,
-                "count": len(matching_words)
-            })
-        else:
-            return jsonify({"error": "Failed to retrieve the webpage"}), response.status_code
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return response.url.startswith('https://')
+    except:
+        return False
 
 
-# SSL Verification Endpoint
-@app.route('/check_ssl', methods=['POST'])
-def check_ssl():
+def check_suspicious_words(content, word_list):
+    return any(word in content for word in word_list)
+
+
+def get_website_age(domain):
+    try:
+        whois_info = whois.whois(domain)
+        return (datetime.datetime.now() - whois_info.creation_date).days
+    except:
+        return None
+
+
+@app.route('/check_website', methods=['POST'])
+def check_website():
     data = request.json
-    url = data.get("url")
-    try:
-        if not url:
-            return jsonify({"error": "Missing url"}), 400
+    url = data['url']
 
-        try:
-            response = requests.get(url, timeout=5)
-            if response.status_code == 200:
-                if response.url.startswith("https://"):
-                    return jsonify({"url": url, "ssl": True, "message": "The website uses SSL."})
-                else:
-                    return jsonify({"url": url, "ssl": False, "message": "The website does not use SSL."})
-            else:
-                return jsonify({"url": url, "error": f"Failed to retrieve the website. Status code: {response.status_code}"}), response.status_code
-        except Exception as e:
-            return jsonify({"url": url, "error": f"An error occurred: {e}"}), 500
-    except Exception as e:
-        app.logger.error(f"Error in check_ssl: {e}")
-        return jsonify({"url": url, "error": f"An error occurred: {e}"}), 500
+    # Check SSL Verification
+    ssl_verified = check_ssl(url)
 
+    # Check for Suspicious Words
+    response = requests.get(url)
+    contains_suspicious_words = check_suspicious_words(
+        response.text, suspicious_words)
 
-# Domain Authenticity Endpoint
-@app.route('/check_domain_authenticity', methods=['POST'])
-def get_domain_registration_date():
-    data = request.json
-    domain_name = data.get("domain_name")
+    # Check Website Registration Date
+    website_age = get_website_age(url)
 
-    if not domain_name:
-        return jsonify({"error": "Missing domain name"}), 400
+    # Calculate Trust Score (this is a simplistic scoring system)
+    trust_score = 10
+    if not ssl_verified:
+        trust_score -= 3
+    if contains_suspicious_words:
+        trust_score -= 4
+    if website_age is not None and website_age < 30:  # less than 30 days
+        trust_score -= 3
 
-    try:
-        domain_info = whois.whois(domain_name)
-        registration_date = domain_info.creation_date
+    # Determine if the website is potentially fraudulent
+    is_fraudulent = trust_score < 5
 
-        if registration_date:
-            if isinstance(registration_date, list):
-                registration_date = registration_date[0]
-
-            formatted_date = registration_date.strftime('%Y-%m-%d %H:%M:%S')
-            time_period = calculate_time_period(registration_date)
-            return jsonify({
-                "domain_name": domain_name,
-                "registration_date": formatted_date,
-                "days_registered": time_period
-            })
-        else:
-            return jsonify({
-                "domain_name": domain_name,
-                "error": "Registration date not available"
-            }), 404
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    return jsonify({
+        'trust_score': trust_score,
+        'is_fraudulent': is_fraudulent
+    })
 
 
-def calculate_time_period(registration_date):
-    try:
-        registration_date = datetime.strptime(
-            str(registration_date), '%Y-%m-%d %H:%M:%S')
-        current_date = datetime.now()
-        return (current_date - registration_date).days
-    except Exception as e:
-        return str(e)
-
-
-@app.route('/blocked', methods=['POST'])
+@app.route('/blocked')
 def blocked():
     return render_template('blocked.html')
 
