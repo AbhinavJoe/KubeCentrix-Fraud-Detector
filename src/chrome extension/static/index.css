@@ -1,59 +1,46 @@
-body,
-html {
-    background-color: #D8DBE2;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    font-size: 11pt;
+body {
     margin: 0;
     padding: 0;
 }
 
 .container {
+    width: 500px;
+    height: 250px;
+    overflow: hidden; /* Hide content overflow */
+    background-color: #f0f0f0;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .extension-image {
-    width: 150px;
-    height: 150px;
+    width: 100px; /* Adjust the image width as needed */
+    height: auto; /* Maintain aspect ratio */
 }
 
 .main-content {
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-h2 {
-    margin: 0;
+    text-align: center;
+    padding: 20px;
 }
 
 .links {
-    display: flex;
-    justify-content: space-between;
+    margin-top: 20px;
 }
 
-.link {
-    text-decoration: solid;
+.links a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-@media only screen and (max-width: 1024px) {
-
-    body,
-    html {
-        width: 400px;
-        height: 150px;
-    }
-
-    .main {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-
-    .footer {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
+.links a:hover {
+    background-color: #f0f0f0;
 }
