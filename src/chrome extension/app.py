@@ -45,15 +45,15 @@ async def check_truecaller(phone_number):
             contact_name = phone_data.get('name', 'Unknown')
 
             if contact_name == 'Unknown':
-                return f"{phone_number} does not have enough information available."
+                return f"{phone_number} does not have enough information available. May be suspicious."
 
             return f"{phone_number} is legit. This number belongs to {contact_name}."
         else:
-            return f"{phone_number} does not have enough information available."
+            return f"{phone_number} does not have enough information available. May be suspicious."
 
     except Exception as e:
         print(f"Error: {e}")
-        return f"{phone_number} is suspicious. Unable to verify!"
+        return f"{phone_number} is not a valid number. Unable to verify!"
 
 
 def connect_to_database():

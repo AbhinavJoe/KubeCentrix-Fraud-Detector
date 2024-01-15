@@ -1,11 +1,10 @@
-/* feedback.css */
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Hide content overflow */
+    overflow: hidden;
+    /* Hide content overflow */
 }
 
 form {
@@ -35,7 +34,7 @@ button {
     background-color: #FF0000;
     color: #fff;
     border: none;
-    padding: 5px 20px;
+    padding: 2px 20px;
     border-radius: 5px;
     cursor: pointer;
 }
