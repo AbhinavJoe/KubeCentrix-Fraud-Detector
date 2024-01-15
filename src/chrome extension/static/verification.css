@@ -1,74 +1,70 @@
-body,
-html {
-    background-color: #D8DBE2;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    font-size: 11pt;
+body {
     margin: 0;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Ensure the form is centered vertically */
 }
 
-
-
 form {
+    width: 500px;
+    max-width: 100%;
+    height: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Add a border for better visibility */
 }
 
 label {
+    display: none; /* Hide the empty label */
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
     margin-bottom: 10px;
 }
 
-input[type="tel"] {
-    padding: 10px;
-    width: 250px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
+button {
+    width: 100%;
+    padding: 10px 25px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top :-70px;
+    padding-left: 60px;
+    /* margin-left: -150px; */
+    /* margin-right:1000px; */
+    /* margin-right: ;*/
+} 
+
+button:hover {
+    background-color: #45a049;
 }
 
-button {
-    padding: 10px;
-    background-color: #3498db;
-    color: white;
-    border: none;
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
     margin-top: 10px;
 }
 
 a {
-    display: block;
-    margin-top: 20px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
 }
 
 a:hover {
-    color: purple;
-}
-
-
-@media only screen and (max-width: 1024px) {
-
-    body,
-    html {
-        width: 400px;
-        height: 150px;
-    }
-
-    .main {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-
-    div#navigation {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-
-    .footer {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
+    color: #45a049;
 }
