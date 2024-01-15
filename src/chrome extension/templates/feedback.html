@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/feedback.css">
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='feedback.css') }}"> -->
     <title>Feedback</title>
 </head>
 
@@ -18,9 +17,12 @@
         <label for="feedback_text">Enter Your Feedback</label>
         <textarea name="feedback_text" id="feedback_text" cols="15" rows="3" required></textarea>
         <button type="submit">Submit</button>
+        <div>
+            <p>{{response}}</p>
+            <a href="/">Return to Main Menu</a>
+        </div>
     </form>
-    <p>{{response}}</p>
-    <a href="/">Return to Main Menu</a>
+    
 </body>
 
 </html>
