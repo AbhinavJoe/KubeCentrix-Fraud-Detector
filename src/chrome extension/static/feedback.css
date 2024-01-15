@@ -1,25 +1,23 @@
-body,
-html {
-    background-color: #D8DBE2;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    font-size: 11pt;
+/* feedback.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+    overflow: hidden; /* Hide content overflow */
 }
-
 
 form {
     max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 0 auto;
     background-color: #fff;
-    border-radius: 8px;
+    padding: 20px;
+    border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 label {
-    display: block;
-    margin-bottom: 8px;
     font-weight: bold;
 }
 
@@ -27,60 +25,34 @@ input[type="url"],
 input[type="number"],
 textarea {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
+    padding: 2px;
+    margin-bottom: 5px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 5px;
 }
 
 button {
-    background-color: #3498db;
-    color: white;
-    padding: 10px 15px;
+    background-color: #FF0000;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    padding: 5px 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
+}
+
+p {
+    color: green;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 a {
+    text-decoration: none;
+    color: #007BFF;
     display: block;
     margin-top: 20px;
-}
-
-a:hover {
-    color: purple;
-}
-
-
-@media only screen and (max-width: 1024px) {
-
-    body,
-    html {
-        width: 400px;
-        height: 150px;
-    }
-
-    .main {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-
-    div#navigation {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
-
-    .footer {
-        width: 250px;
-        margin-left: 25px;
-        margin-right: 25px;
-    }
 }
