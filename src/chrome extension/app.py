@@ -1,13 +1,15 @@
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from truecallerpy import search_phonenumber
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
 import mysql.connector
 import json
 from datetime import datetime
 import os
 import asyncio
-import requests
-import whois
+# import requests
+# import whois
 
 
 app = Flask(__name__)
@@ -17,7 +19,11 @@ current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
     current_directory, "../../data/feedback_data.json")
 
-words_file_path = os.path.join(current_directory, "word_list.json")
+# words_file_path = os.path.join(current_directory, "word_list.json")
+
+model_path = os.path.join(current_directory, "model_1.pkl")
+
+vectorizer_path = os.path.join(current_directory, "vectorizer.pkl")
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -168,61 +174,38 @@ def fetch_and_store_to_json():
     print(f"Data successfully stored in feedback_data.json.")
 
 
-with open(words_file_path) as f:
-    suspicious_words = json.load(f)
-
-
-def check_ssl(url):
-    try:
-        response = requests.get(url)
-        return response.url.startswith('https://')
-    except:
-        return False
-
-
-def check_suspicious_words(content, word_list):
-    return any(word in content for word in word_list)
-
-
-def get_website_age(domain):
-    try:
-        whois_info = whois.whois(domain)
-        return (datetime.datetime.now() - whois_info.creation_date).days
-    except:
-        return None
-
-
-@app.route('/check_website', methods=['POST'])
-def check_website():
+@app.route('/ml_check', methods=['POST'])
+def ml_check():
     data = request.json
-    url = data['url']
+    url = data.get("url")
 
-    # Check SSL Verification
-    ssl_verified = check_ssl(url)
+    with open(model_path, "rb") as file:
+        rf_model = pickle.load(file)
 
-    # Check for Suspicious Words
-    response = requests.get(url)
-    contains_suspicious_words = check_suspicious_words(
-        response.text, suspicious_words)
+    # Load the TfidfVectorizer used during training
+    with open(vectorizer_path, 'rb') as vectorizer_file:
+        vectorizer = pickle.load(vectorizer_file)
 
-    # Check Website Registration Date
-    website_age = get_website_age(url)
+    # Input data for prediction
+    new_url = ['meet.google.com/kkg-fnaw-omf']
 
-    # Calculate Trust Score (this is a simplistic scoring system)
-    trust_score = 10
-    if not ssl_verified:
-        trust_score -= 3
-    if contains_suspicious_words:
-        trust_score -= 4
-    if website_age is not None and website_age < 30:  # less than 30 days
-        trust_score -= 3
+    # Transform the new URL using the loaded vectorizer
+    new_url_transformed = vectorizer.transform(new_url)
 
-    is_fraudulent = trust_score < 5
+    # Ensure the number of features in the input data matches the trained model
+    if new_url_transformed.shape[1] != rf_model.estimators_[0].n_features_in_:
+        print(
+            f"Number of features in the input data ({new_url_transformed.shape[1]}) does not match the model's expectations ({rf_model.estimators_[0].n_features_in_}).")
 
-    return jsonify({
-        'trust_score': trust_score,
-        'is_fraudulent': is_fraudulent
-    })
+    # Make predictions using the loaded model
+    new_url_prediction = rf_model.predict(new_url_transformed)
+
+    # Check if the prediction matches either of the specified patterns
+    # if new_url_prediction == 1:
+    if any((new_url_prediction == pattern).all() for pattern in [[1, 0, 0, 0], [0, 1, 0, 0]]):
+        return jsonify(result="Legitimate")
+    else:
+        return jsonify(result="Suspicious")
 
 
 @app.route('/blocked')
@@ -232,3 +215,60 @@ def blocked():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+# with open(words_file_path) as f:
+#     suspicious_words = json.load(f)
+
+
+# def check_ssl(url):
+#     try:
+#         response = requests.get(url)
+#         return response.url.startswith('https://')
+#     except:
+#         return False
+
+
+# def check_suspicious_words(content, word_list):
+#     return any(word in content for word in word_list)
+
+
+# def get_website_age(domain):
+#     try:
+#         whois_info = whois.whois(domain)
+#         return (datetime.datetime.now() - whois_info.creation_date).days
+#     except:
+#         return None
+
+
+# @app.route('/check_website', methods=['POST'])
+# def check_website():
+#     data = request.json
+#     url = data['url']
+
+#     # Check SSL Verification
+#     ssl_verified = check_ssl(url)
+
+#     # Check for Suspicious Words
+#     response = requests.get(url)
+#     contains_suspicious_words = check_suspicious_words(
+#         response.text, suspicious_words)
+
+#     # Check Website Registration Date
+#     website_age = get_website_age(url)
+
+#     # Calculate Trust Score (this is a simplistic scoring system)
+#     trust_score = 10
+#     if not ssl_verified:
+#         trust_score -= 3
+#     if contains_suspicious_words:
+#         trust_score -= 4
+#     if website_age is not None and website_age < 30:  # less than 30 days
+#         trust_score -= 3
+
+#     is_fraudulent = trust_score < 5
+
+#     return jsonify({
+#         'trust_score': trust_score,
+#         'is_fraudulent': is_fraudulent
+#     })
