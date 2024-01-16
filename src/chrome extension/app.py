@@ -202,7 +202,7 @@ def ml_check():
 
     # Determine if URL is legit or suspicious
     if predicted_class == 0:
-        result = 'Legit'
+        result = 'Legitimate'
     else:
         result = 'Suspicious'
 
