@@ -2,6 +2,9 @@ from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from truecallerpy import search_phonenumber
 import pickle
+import re
+from urllib.parse import urlparse
+import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 import mysql.connector
 import json
@@ -18,9 +21,6 @@ json_file_path = os.path.join(
     current_directory, "../../data/feedback_data.json")
 
 model_path = os.path.join(current_directory, "../../models/model.pkl")
-
-vectorizer_path = os.path.join(
-    current_directory, "../../models/tfidf_vectorizer.pkl")
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -171,34 +171,42 @@ def fetch_and_store_to_json():
     print(f"Data successfully stored in feedback_data.json.")
 
 
+def extract_features(url):
+    # Add the same feature extraction logic you used during model training
+    special_chars = [';', '?', '=', '&']
+    features = {'length': len(url),
+                'has_ip': int(bool(re.match(r'\d+\.\d+\.\d+\.\d+', url))),
+                'count_special': sum(map(url.count, special_chars)),
+                'https': url.startswith('https')
+                }
+    return features
+
+
 @app.route('/ml_check', methods=['POST'])
 def ml_check():
     data = request.json
-    url = data.get('url')
+    url = data.get("url")
 
-    with open(model_path, "rb") as file:
-        rf_model = pickle.load(file)
+    with open(model_path, 'rb') as model_file:
+        model = pickle.load(model_file)
 
-    with open(vectorizer_path, 'rb') as vectorizer_file:
-        vectorizer = pickle.load(vectorizer_file)
+    if not url:
+        return jsonify({"error": "Missing URL"}), 400
 
-    # Transform the new URL using the loaded vectorizer
-    url_transformed = vectorizer.transform([url])
+    # Extract features and prepare for prediction
+    features = extract_features(url)
+    features_df = pd.DataFrame([features])
 
-    # Ensure the number of features in the input data matches the trained model
-    if url_transformed.shape[1] != rf_model.estimators_[0].n_features_in_:
-        print(
-            f"Number of features in the input data ({url_transformed.shape[1]}) does not match the model's expectations ({rf_model.estimators_[0].n_features_in_}).")
+    # Make prediction
+    predicted_class = model.predict(features_df)[0]
 
-    # Make predictions using the loaded model
-    new_url_prediction = rf_model.predict(url_transformed)
-
-    # Check if the prediction matches either of the specified patterns
-    # if new_url_prediction == 1:
-    if any((new_url_prediction == pattern).all() for pattern in [[1, 0, 0, 0], [0, 1, 0, 0]]):
-        return jsonify(result="Legitimate")
+    # Determine if URL is legit or suspicious
+    if predicted_class == 0:
+        result = 'Legit'
     else:
-        return jsonify(result="Suspicious")
+        result = 'Suspicious'
+
+    return jsonify({"result": result})
 
 
 @app.route('/blocked')
