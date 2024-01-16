@@ -5,7 +5,6 @@ import pickle
 import re
 from urllib.parse import urlparse
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
 import mysql.connector
 import json
 from datetime import datetime
