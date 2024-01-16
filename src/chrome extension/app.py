@@ -21,9 +21,10 @@ json_file_path = os.path.join(
 
 # words_file_path = os.path.join(current_directory, "word_list.json")
 
-model_path = os.path.join(current_directory, "model_1.pkl")
+model_path = os.path.join(current_directory, "../../models/model_1.pkl")
 
-vectorizer_path = os.path.join(current_directory, "vectorizer.pkl")
+vectorizer_path = os.path.join(
+    current_directory, "../../models/vectorizer.pkl")
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -182,23 +183,19 @@ def ml_check():
     with open(model_path, "rb") as file:
         rf_model = pickle.load(file)
 
-    # Load the TfidfVectorizer used during training
     with open(vectorizer_path, 'rb') as vectorizer_file:
         vectorizer = pickle.load(vectorizer_file)
 
-    # Input data for prediction
-    new_url = ['meet.google.com/kkg-fnaw-omf']
-
     # Transform the new URL using the loaded vectorizer
-    new_url_transformed = vectorizer.transform(new_url)
+    url_transformed = vectorizer.transform([url])
 
     # Ensure the number of features in the input data matches the trained model
-    if new_url_transformed.shape[1] != rf_model.estimators_[0].n_features_in_:
+    if url_transformed.shape[1] != rf_model.estimators_[0].n_features_in_:
         print(
-            f"Number of features in the input data ({new_url_transformed.shape[1]}) does not match the model's expectations ({rf_model.estimators_[0].n_features_in_}).")
+            f"Number of features in the input data ({url_transformed.shape[1]}) does not match the model's expectations ({rf_model.estimators_[0].n_features_in_}).")
 
     # Make predictions using the loaded model
-    new_url_prediction = rf_model.predict(new_url_transformed)
+    new_url_prediction = rf_model.predict(url_transformed)
 
     # Check if the prediction matches either of the specified patterns
     # if new_url_prediction == 1:
