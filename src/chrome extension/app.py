@@ -17,9 +17,7 @@ current_directory = os.path.dirname(os.path.realpath(__file__))
 json_file_path = os.path.join(
     current_directory, "../../data/feedback_data.json")
 
-# words_file_path = os.path.join(current_directory, "word_list.json")
-
-model_path = os.path.join(current_directory, "../../models/model_1.pkl")
+model_path = os.path.join(current_directory, "../../models/model.pkl")
 
 vectorizer_path = os.path.join(
     current_directory, "../../models/tfidf_vectorizer.pkl")
@@ -176,7 +174,7 @@ def fetch_and_store_to_json():
 @app.route('/ml_check', methods=['POST'])
 def ml_check():
     data = request.json
-    url = data.get("url")
+    url = data.get('url')
 
     with open(model_path, "rb") as file:
         rf_model = pickle.load(file)
