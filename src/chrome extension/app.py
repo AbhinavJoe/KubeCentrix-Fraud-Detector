@@ -214,7 +214,7 @@ def extract_features(url):
     return features
 
 
-'''This Flask route '/ml_check' is used to check if a given URL is legitimate or suspicious using a machine learning model.The route handles POST requests with a URL in the JSON payload.It uses an 'extract_features' function to convert the URL into a feature set, and then applies a pre-trained machine learning model to predict the URL's class (legitimate or suspicious).'''
+'''This Flask route '/ml_check' is used to check if a given URL is legitimate or suspicious using a machine learning model. The route handles POST requests with a URL in the JSON payload. It uses an 'extract_features' function to convert the URL into a feature set, and then applies a pre-trained machine learning model to predict the URL's class (legitimate or suspicious).'''
 
 
 @app.route('/ml_check', methods=['POST'])
