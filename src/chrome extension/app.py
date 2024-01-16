@@ -171,7 +171,6 @@ def fetch_and_store_to_json():
 
 
 def extract_features(url):
-    # Add the same feature extraction logic you used during model training
     special_chars = [';', '?', '=', '&']
     features = {'length': len(url),
                 'has_ip': int(bool(re.match(r'\d+\.\d+\.\d+\.\d+', url))),
