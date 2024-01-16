@@ -28,56 +28,56 @@ count: Number of matching words.
   "matching_words": ["login", "password"],
   "count": 2
 }
-Error (400 Bad Request):
+```
+## Error (400 Bad Request):
 Missing url or word_list.
-json
-Copy code
+```json
 {
   "error": "Missing url or word_list"
 }
-Error (other):
+```
+## Error (other):
 Failed to retrieve the webpage.
-json
-Copy code
+```json
 {
   "error": "Failed to retrieve the webpage"
 }
 ```
-SSL Verification
-Endpoint: /check_ssl (POST)
+## SSL Verification
+##Endpoint: /check_ssl (POST)
 Request
 Method: POST
 Body:
 url: The URL of the website to check for SSL.
-json
-Copy code
+```json
 {
   "url": "https://example.com"
 }
-Response
-Success (200 OK):
+```
+## Response
+### Success (200 OK):
 url: The URL of the website.
 ssl: Boolean indicating whether the website uses SSL.
 message: Information about SSL usage.
-json
-Copy code
+```json
 {
   "url": "https://example.com",
   "ssl": true,
   "message": "The website uses SSL."
 }
-Error (400 Bad Request):
+```
+## Error (400 Bad Request):
 Missing url.
-json
-Copy code
+```json
 {
   "error": "Missing url"
 }
-Error (other):
+```
+## Error (other):
 Failed to retrieve the website or unexpected status code.
-json
-Copy code
+```json
 {
   "url": "https://example.com",
   "error": "Failed to retrieve the website. Status code: 404"
 }
+```
