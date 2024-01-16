@@ -24,10 +24,10 @@ input[type="url"],
 input[type="number"],
 textarea {
     width: 100%;
-    padding: 2px;
-    margin-bottom: 5px;
+    padding: 1px;
+    margin-bottom: 2px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 
 button {
@@ -46,12 +46,12 @@ button:hover {
 p {
     color: green;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 a {
     text-decoration: none;
     color: #007BFF;
     display: block;
-    margin-top: 20px;
+    margin-top: 10px;
 }
