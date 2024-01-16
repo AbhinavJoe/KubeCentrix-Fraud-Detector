@@ -27,6 +27,7 @@ id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
 ''' This asynchronous function 'check_truecaller' is designed to verify phone numbers using the Truecaller API. It takes a phone number as input and checks its legitimacy and spam status. The function returns different messages based on the information retrieved from the API. It handles both successful data retrieval and exceptions that might occur during the process.'''
 
+
 async def check_truecaller(phone_number):
     try:
         result = await search_phonenumber({"phone_number": phone_number}, "IN", id)
@@ -53,13 +54,12 @@ async def check_truecaller(phone_number):
     except Exception as e:
         print(f"Error: {e}")
         return f"{phone_number} is not a valid number. Unable to verify!"
-    
 
 
 '''This function 'connect_to_database' establishes a connection to a MySQL database.It uses the mysql.connector.connect method to create this connection.The database connection parameters such as host, user, password, and the specific database name are provided.
 The function returns a connection object which can be used to interact with the database.'''
 
-    
+
 def connect_to_database():
     return mysql.connector.connect(
         host="localhost",
@@ -67,6 +67,7 @@ def connect_to_database():
         password="Rock_Hopper1",
         database="Customer_Services"
     )
+
 
 ''' This function 'insert_user_feedback' is designed to insert customer feedback into a database.It takes customer name, website URL, feedback text, and rating as inputs.The function establishes a database connection, inserts the feedback data into the UserFeedback table,
 and then returns the auto-generated feedback ID. '''
@@ -99,6 +100,7 @@ def insert_user_feedback(customer_name, website_url, feedback_text, rating):
 
 '''Render the 'index.html' template when accessing the root URL '/' '''
 
+
 @app.route('/')
 def popup():
     return render_template('index.html')
@@ -106,18 +108,22 @@ def popup():
 
 '''Render the 'verification.html' template when accessing '/verification' route when the verify number button is clicked in the popup '''
 
+
 @app.route('/verification')
 def verification():
     return render_template('verification.html')
 
 
-
 '''Render the 'feeback.html' template when accessing '/feedback' route when then user feedback is clicked  '''
+
+
 @app.route('/feedback')
 def feedback():
     return render_template('feedback.html')
 
+
 '''This route '/submitnumber' is defined to handle POST requests in a web application. When a POST request is received, it extracts a phone number from the request form,runs an asynchronous function 'check_truecaller' to verify the phone number,and then renders a template with the verification result.'''
+
 
 @app.route('/submitnumber', methods=['POST'])
 def submit_number():
@@ -129,7 +135,6 @@ def submit_number():
     loop.close()
 
     return render_template('verification.html', result=result)
-
 
 
 '''This route '/submitfeedback' is defined to handle POST requests for submitting feedback in a web application.It retrieves feedback data from the request form, inserts the data into a database, and may perform additional operations like storing data to a JSON file.The function returns a response to the user by rendering an HTML template with a success or error message.'''
@@ -159,7 +164,9 @@ def submit_feedback():
 
     return render_template('feedback.html', response=response)
 
+
 '''This function 'fetch_and_store_to_json' connects to a database, retrieves feedback data from the UserFeedback table, and then stores this data in a JSON file.It fetches data, formats it into a list of dictionaries, and writes this list to a JSON file.The function ensures proper closure of database connections and hand'''
+
 
 def fetch_and_store_to_json():
     db_connection = connect_to_database()
@@ -192,7 +199,9 @@ def fetch_and_store_to_json():
 
     print(f"Data successfully stored in feedback_data.json.")
 
+
 '''# This Flask route '/ml_check' is used to check if a given URL is legitimate or suspicious using a machine learning model. The route handles POST requests with a URL in the JSON payload. It uses an 'extract_features' function to convert the URL into a feature set, and then applies a pre-trained machine learning model to predict the '''
+
 
 def extract_features(url):
     # Add the same feature extraction logic you used during model training
@@ -206,6 +215,7 @@ def extract_features(url):
 
 
 '''This Flask route '/ml_check' is used to check if a given URL is legitimate or suspicious using a machine learning model.The route handles POST requests with a URL in the JSON payload.It uses an 'extract_features' function to convert the URL into a feature set, and then applies a pre-trained machine learning model to predict the URL's class (legitimate or suspicious).'''
+
 
 @app.route('/ml_check', methods=['POST'])
 def ml_check():
