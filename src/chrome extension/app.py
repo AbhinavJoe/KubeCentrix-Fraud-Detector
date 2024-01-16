@@ -8,8 +8,6 @@ import json
 from datetime import datetime
 import os
 import asyncio
-# import requests
-# import whois
 
 
 app = Flask(__name__)
@@ -24,7 +22,7 @@ json_file_path = os.path.join(
 model_path = os.path.join(current_directory, "../../models/model_1.pkl")
 
 vectorizer_path = os.path.join(
-    current_directory, "../../models/vectorizer.pkl")
+    current_directory, "../../models/tfidf_vectorizer.pkl")
 
 id = "a1i04--kE1GeYFb-hPQ7gmvIWvjV8hTQdI74aC1IDKiDcogB0zyFezzT0764fYMQ"
 
@@ -212,60 +210,3 @@ def blocked():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# with open(words_file_path) as f:
-#     suspicious_words = json.load(f)
-
-
-# def check_ssl(url):
-#     try:
-#         response = requests.get(url)
-#         return response.url.startswith('https://')
-#     except:
-#         return False
-
-
-# def check_suspicious_words(content, word_list):
-#     return any(word in content for word in word_list)
-
-
-# def get_website_age(domain):
-#     try:
-#         whois_info = whois.whois(domain)
-#         return (datetime.datetime.now() - whois_info.creation_date).days
-#     except:
-#         return None
-
-
-# @app.route('/check_website', methods=['POST'])
-# def check_website():
-#     data = request.json
-#     url = data['url']
-
-#     # Check SSL Verification
-#     ssl_verified = check_ssl(url)
-
-#     # Check for Suspicious Words
-#     response = requests.get(url)
-#     contains_suspicious_words = check_suspicious_words(
-#         response.text, suspicious_words)
-
-#     # Check Website Registration Date
-#     website_age = get_website_age(url)
-
-#     # Calculate Trust Score (this is a simplistic scoring system)
-#     trust_score = 10
-#     if not ssl_verified:
-#         trust_score -= 3
-#     if contains_suspicious_words:
-#         trust_score -= 4
-#     if website_age is not None and website_age < 30:  # less than 30 days
-#         trust_score -= 3
-
-#     is_fraudulent = trust_score < 5
-
-#     return jsonify({
-#         'trust_score': trust_score,
-#         'is_fraudulent': is_fraudulent
-#     })

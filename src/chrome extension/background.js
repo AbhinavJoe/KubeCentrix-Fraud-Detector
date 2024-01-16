@@ -9,8 +9,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.result === "Suspicious" && !sender.tab.url.includes("localhost:5000/blocked")) {
-                    chrome.tabs.update(sender.tab.id, { url: "http://localhost:5000/blocked" });
+                if (data.result === "Suspicious") {
+                    if (sender.tab.url !== "http://localhost:5000/blocked") {
+                        chrome.tabs.update(sender.tab.id, { url: "http://localhost:5000/blocked" });
+                    }
                 } else {
                     sendResponse({ result: "Legitimate" });
                 }

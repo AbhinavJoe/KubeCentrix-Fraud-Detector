@@ -5,4 +5,3 @@ if (!window.urlChecked) {
     });
     window.urlChecked = true;
 }
-
