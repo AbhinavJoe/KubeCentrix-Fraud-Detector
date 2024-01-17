@@ -91,7 +91,6 @@ def insert_user_feedback(customer_name, website_url, feedback_text, rating):
     cursor.execute("SELECT LAST_INSERT_ID()")
     feedback_id = cursor.fetchone()[0]
 
-    # Close the cursor and connection
     cursor.close()
     db_connection.close()
 
@@ -128,7 +127,6 @@ def feedback():
 @app.route('/submitnumber', methods=['POST'])
 def submit_number():
     phone_number = request.form['phone_number']
-    # Run the asynchronous coroutine using an event loop
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     result = loop.run_until_complete(check_truecaller(phone_number))
@@ -143,18 +141,15 @@ def submit_number():
 @app.route('/submitfeedback', methods=['POST'])
 def submit_feedback():
     try:
-        # Retrieve data from the request
         data = request.form
         customer_name = data.get("customer_name")
         website_url = data.get("website_url")
         feedback_text = data.get("feedback_text")
         rating = data.get("rating")
 
-        # Insert feedback into the database
         feedback_id = insert_user_feedback(
             customer_name, website_url, feedback_text, rating)
 
-        # Fetch and store data to JSON file
         fetch_and_store_to_json()
 
         response = "Your feedback has been recorded. Thank You."
@@ -172,28 +167,22 @@ def fetch_and_store_to_json():
     db_connection = connect_to_database()
     cursor = db_connection.cursor()
 
-    # Fetch data from the UserFeedback table
     select_query = "SELECT Website_URL, FeedbackText FROM UserFeedback"
     cursor.execute(select_query)
 
-    # Fetch all the rows
     feedback_data = cursor.fetchall()
 
-    # Create a list to store the data
     data_list = []
 
-    # Convert the data to a list of dictionaries
     for row in feedback_data:
         data_list.append({
             'Website_URL': row[0],
             'FeedbackText': row[1]
         })
 
-    # Close the cursor and connection
     cursor.close()
     db_connection.close()
 
-    # Save the data to a JSON file
     with open(json_file_path, 'w') as json_file:
         json.dump(data_list, json_file, indent=2)
 
@@ -204,7 +193,6 @@ def fetch_and_store_to_json():
 
 
 def extract_features(url):
-    # Add the same feature extraction logic you used during model training
     special_chars = [';', '?', '=', '&']
     features = {'length': len(url),
                 'has_ip': int(bool(re.match(r'\d+\.\d+\.\d+\.\d+', url))),
@@ -228,14 +216,11 @@ def ml_check():
     if not url:
         return jsonify({"error": "Missing URL"}), 400
 
-    # Extract features and prepare for prediction
     features = extract_features(url)
     features_df = pd.DataFrame([features])
 
-    # Make prediction
     predicted_class = model.predict(features_df)[0]
 
-    # Determine if URL is legit or suspicious
     if predicted_class == 0:
         result = 'Legitimate'
     else:
