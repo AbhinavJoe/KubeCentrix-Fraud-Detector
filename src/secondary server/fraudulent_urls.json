@@ -9,5 +9,7 @@
     "http://www.150cents.com/index.php",
     "http://localhost:5000/blocked",
     "http://ww1.soundflush.com/",
+    "http://localhost:5000/blocked",
+    "http://127.0.0.1:5000/",
     "http://localhost:5000/blocked"
 ]
