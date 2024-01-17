@@ -1,5 +1,6 @@
 # Importing libraries
 from flask import Flask, request, render_template, jsonify
+import requests
 from flask_cors import CORS
 from truecallerpy import search_phonenumber
 import pickle
@@ -225,6 +226,20 @@ def ml_check():
         result = 'Legitimate'
     else:
         result = 'Suspicious'
+        try:
+            # Send URL to the secondary Flask server
+            # Replace with actual URL
+            secondary_server_url = 'http://127.0.0.1:5001/receive_data'
+            response = requests.post(secondary_server_url, json={
+                                     'fraudulent_url': url})
+
+            # Optional: Check response from secondary server
+            if response.status_code == 200:
+                print("Data successfully sent to secondary server.")
+            else:
+                print("Failed to send data to secondary server.")
+        except requests.exceptions.RequestException as e:
+            print(f"Error sending data to secondary server: {e}")
 
     return jsonify({"result": result})
 
@@ -234,5 +249,11 @@ def blocked():
     return render_template('blocked.html')
 
 
+@app.route('/communicate')
+def communicate():
+    response = requests.get('http://192.168.1.11:5001/')
+    return 'Response from server 2: ' + response.text
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
