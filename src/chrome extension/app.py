@@ -233,7 +233,7 @@ def ml_check():
             response = requests.post(secondary_server_url, json={
                                      'fraudulent_url': url})
 
-            # Optional: Check response from secondary server
+            # Check response from secondary server
             if response.status_code == 200:
                 print("Data successfully sent to secondary server.")
             else:
@@ -247,12 +247,6 @@ def ml_check():
 @app.route('/blocked')
 def blocked():
     return render_template('blocked.html')
-
-
-@app.route('/communicate')
-def communicate():
-    response = requests.get('http://192.168.1.11:5001/')
-    return 'Response from server 2: ' + response.text
 
 
 if __name__ == '__main__':
