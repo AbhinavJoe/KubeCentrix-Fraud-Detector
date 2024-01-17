@@ -5,22 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/feedback.css">
-    <title>Feedback</title>
+</head>
+<title>Feedback</title>
 </head>
 
 <body>
+    <div>
+        <p>{{response}}</p>
+        <a href="/" class="back-button">Return to Main Menu</a>
+    </div>
     <form action="/submitfeedback" method="post">
         <label for="urlInput">Enter Website URL</label>
-        <input type="url" name="urlInput" id="urlInput" required>
+        <input type="url" name="website_url" id="urlInput" required>
         <label for="rating">Enter Your Rating</label>
         <input type="number" name="rating" id="rating" minlength="0" maxlength="5">
         <label for="feedback_text">Enter Your Feedback</label>
         <textarea name="feedback_text" id="feedback_text" cols="15" rows="3" required></textarea>
         <button type="submit">Submit</button>
-        <div>
-            <p>{{response}}</p>
-            <a href="/">Return to Main Menu</a>
-        </div>
     </form>
 </body>
 
