@@ -233,7 +233,6 @@ def ml_check():
             response = requests.post(secondary_server_url, json={
                                      'fraudulent_url': url})
 
-            # Check response from secondary server
             if response.status_code == 200:
                 print("Data successfully sent to secondary server.")
             else:
