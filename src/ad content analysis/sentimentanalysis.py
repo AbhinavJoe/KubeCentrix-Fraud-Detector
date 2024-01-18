@@ -20,5 +20,5 @@ def get_bert_embeddings(text):
 
 nlp = pipeline("sentiment-analysis",
                model="distilbert-base-uncased-finetuned-sst-2-english")
-result = nlp("Money back guaranteed!")
+result = nlp("Get a Sports Car for mere 100$")
 print(result)
