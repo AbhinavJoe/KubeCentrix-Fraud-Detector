@@ -24,7 +24,7 @@ ad_text = extract_text_from_image(ad_image_url)
 
 if ad_text != "Failed to retrieve the image":
     sentiment_result = nlp(ad_text)
-    print(f"Extracted Text: {ad_text}")
+    print(f"Ad Text: {ad_text}")
     print(f"Sentiment Analysis Result: {sentiment_result}")
 else:
     print(ad_text)
