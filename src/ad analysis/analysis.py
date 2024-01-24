@@ -18,7 +18,7 @@ def extract_text_from_image(image_url):
 nlp = pipeline("sentiment-analysis",
                model="distilbert-base-uncased-finetuned-sst-2-english")
 
-ad_image_url = 'https://tpc.googlesyndication.com/simgad/1462447038842297607?'
+ad_image_url = 'https://mobileads.indiatimes.com/Web_Ads/ROADBLOCK/2024/samsung/S_series/22jan24/300x250.webp'
 
 ad_text = extract_text_from_image(ad_image_url)
 
