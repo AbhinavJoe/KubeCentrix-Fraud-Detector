@@ -2,7 +2,7 @@ import json
 from transformers import pipeline
 import os
 
-# Load the sentiment analysis model
+# Loads the sentiment analysis model
 nlp = pipeline("sentiment-analysis",
                model="distilbert-base-uncased-finetuned-sst-2-english")
 
