@@ -78,17 +78,16 @@ def insert_user_feedback(customer_name, website_url, feedback_text, rating):
     db_connection = connect_to_database()
     cursor = db_connection.cursor()
 
-    # Get the current timestamp
     timestamp = datetime.now()
 
-    # Insert the feedback into the UserFeedback table
+    # Inserts the feedback into the UserFeedback table
     insert_query = "INSERT INTO UserFeedback (CustomerName, Website_URL, FeedbackText, Rating, Timestamp) VALUES (%s, %s, %s, %s, %s)"
     values = (customer_name, website_url, feedback_text, rating, timestamp)
 
     cursor.execute(insert_query, values)
     db_connection.commit()
 
-    # Fetch the auto-generated FeedbackID
+    # Fetchs the auto-generated FeedbackID
     cursor.execute("SELECT LAST_INSERT_ID()")
     feedback_id = cursor.fetchone()[0]
 
