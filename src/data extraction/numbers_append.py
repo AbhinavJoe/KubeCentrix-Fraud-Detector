@@ -264,10 +264,8 @@ for line in customer_care_list_text.split('\n'):
             contacts.append({"ContactName": ContactName.strip(),
                             "PhoneNumber": PhoneNumber.strip()})
 
-# Creates a JSON file in the file path
 json_file_path = "data/phonebook_data.json"
 
-# Writes data to JSON file
 with open(json_file_path, 'w') as json_file:
     json.dump(contacts, json_file, indent=4)
 
