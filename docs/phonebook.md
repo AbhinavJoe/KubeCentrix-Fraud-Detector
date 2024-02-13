@@ -12,7 +12,8 @@ def connect_to_database():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="J@itely54$",
+        # Input the password of your own local SQL Workbench database.
+        password="",
         database="Customer_Services"
     )
 ```
