@@ -23,6 +23,7 @@ json_file_path = os.path.join(
 
 model_path = os.path.join(current_directory, "../../models/model.pkl")
 
+# Truelcaller SDK Api Key
 id = "a1i05--kYa4MbFj-NDIAbFZAPz85rQawtvuCYeqka0TiB96_9NhjGBLE577MumAg"
 
 
@@ -65,7 +66,8 @@ def connect_to_database():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="Rock_Hopper1",
+        # Input the password of your own local SQL Workbench database.
+        password="",
         database="Customer_Services"
     )
 
