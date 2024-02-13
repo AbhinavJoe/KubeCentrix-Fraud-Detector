@@ -162,3 +162,7 @@ cython_debug/
 # large files
 model.pkl
 model_1.pkl
+
+#miscellaneous files
+image to text.py
+sentimentanalysis.py
