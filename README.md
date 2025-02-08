@@ -34,3 +34,6 @@ The goal of is to create and implement an AI/ML-based system capable of autonomo
 - **models/:** Store pre-trained models or model weights.
 - **docs/:** Documentation related to the project, including any research papers, design decisions, or architectural diagrams.
 - **README.md:** This file provides an overview of the project.
+
+## Demo
+![KubeCentrix - Fraud Detector Demo](docs/KubeCentrixDemo.mp4)
